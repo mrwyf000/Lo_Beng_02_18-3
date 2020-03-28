@@ -101,6 +101,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
 
+
+    //make marker to the map
     private Marker mTinHeng;
     private static final LatLng TinHeng = new LatLng(22.4627, 114.0008);
     private void addMarkersToMap(){
@@ -111,6 +113,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .snippet("Population: 2,074,200")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
     }
+
+
+
 
 
     //move the camera function
