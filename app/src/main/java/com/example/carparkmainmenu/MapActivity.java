@@ -99,11 +99,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         init();
     }
 
+
+
     private Marker mTinHeng;
-
     private static final LatLng TinHeng = new LatLng(22.4627, 114.0008);
-
-
     private void addMarkersToMap(){
 
         mTinHeng = mGoogleMap.addMarker(new MarkerOptions()
