@@ -1,7 +1,8 @@
 package com.example.carparkmainmenu;
 
+//the name want to show in firebase
 public class ParkUserProfile {
-    public String parkName;
+    public String aaaParkName;
     public String parkAddress;
     public String motor;
     public String privateCar;
@@ -10,8 +11,9 @@ public class ParkUserProfile {
     public String minimunCharge;
     public String flexiblePriceFee;
 
+    // this."name show in firebase" = "id used in program"
     public ParkUserProfile(String parkName, String parkAddress, String motor, String privateCar, String truck, String parkingFee, String minimunCharge, String flexiblePriceFee) {
-        this.parkName = parkName;
+        this.aaaParkName = parkName;
         this.parkAddress = parkAddress;
         this.motor = motor;
         this.privateCar = privateCar;

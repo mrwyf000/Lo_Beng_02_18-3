@@ -195,6 +195,5 @@ public class ParkRegistrationActivity extends AppCompatActivity {
         DatabaseReference myRef = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid());
         ParkUserProfile parkUserProfile = new ParkUserProfile(park_name, park_address, motor_Car, private_Car, truck_Car, parking_Fee, minimun_Charge, flexible_Fee);
         myRef.setValue(parkUserProfile);
-
     }
 }

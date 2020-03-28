@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 
 
 public class ParkFile extends AppCompatActivity {
+
+    private static final String TAG = "ParkFile";
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
@@ -112,6 +115,7 @@ public class ParkFile extends AppCompatActivity {
                 if (firebaseUser!=null) {
                     if (validate()) {
                         sendUserData();
+                        sendParkingSlot();
                         Toast.makeText(ParkFile.this, "upload successful", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(ParkFile.this, takedata.class));
                     } else {
@@ -156,7 +160,14 @@ public class ParkFile extends AppCompatActivity {
         DatabaseReference myRef = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid());
         ParkUserProfile parkUserProfile = new ParkUserProfile(park_name, park_address, motor_Car, private_Car, truck_Car, parking_Fee, minimun_Charge, flexible_Fee);
         myRef.setValue(parkUserProfile);
+    }
 
+    private void sendParkingSlot(){
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference myRef2 = firebaseDatabase.getReference().child("AvailableParkingSlot").child(firebaseAuth.getUid());
+        ParkUserProfile_avaSlot parkUserProfile_avaSlot = new ParkUserProfile_avaSlot(park_name, motor_Car, private_Car, truck_Car);
+        myRef2.setValue(parkUserProfile_avaSlot);
+        Log.d(TAG, "Slot data sent!");
     }
 
 }

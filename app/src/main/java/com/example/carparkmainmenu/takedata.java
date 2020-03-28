@@ -59,7 +59,7 @@ public class takedata extends AppCompatActivity {
                 String minimunCharge = dataSnapshot.child("minimunCharge").getValue().toString();
                 String motor = dataSnapshot.child("motor").getValue().toString();
                 String parkAddress1 = dataSnapshot.child("parkAddress").getValue().toString();
-                String parkName1 = dataSnapshot.child("parkName").getValue().toString();
+                String parkName1 = dataSnapshot.child("aaaParkName").getValue().toString();
                 String parkingFee1 = dataSnapshot.child("parkingFee").getValue().toString();
                 String privateCar = dataSnapshot.child("privateCar").getValue().toString();
                 String truck = dataSnapshot.child("truck").getValue().toString();
