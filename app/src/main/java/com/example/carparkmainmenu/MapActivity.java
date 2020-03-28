@@ -101,7 +101,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
 
-
     //make marker to the map
     private Marker mTinHeng;
     private static final LatLng TinHeng = new LatLng(22.4627, 114.0008);
