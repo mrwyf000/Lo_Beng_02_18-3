@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class takedata extends AppCompatActivity {
-    private TextView parkName,parkAddress, numberM, numberP, numberT, parkingFee, minCharge, flexiblePricing;
+    private TextView parkName,parkAddress, numberM, numberP, numberT, parkingFee, minCharge, flexiblePricing, refNum;
     private Button update, logout;
     private DatabaseReference reff, myDatabaseRef;
     private FirebaseAuth firebaseAuth;

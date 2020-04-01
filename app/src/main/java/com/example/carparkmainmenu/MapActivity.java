@@ -18,6 +18,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.maps.android.clustering.ClusterManager;
 
@@ -70,6 +75,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ImageView mGps;
     private Place mplace;
 
+    //take data from firebase
+    private DatabaseReference reff;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase firebaseDatabase;
+    String title, snippet;
+
     //widgets
     private EditText mSearchText;
 
@@ -97,20 +108,91 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mMapView.getMapAsync(this);
         init();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
     }
 
 
-
+    //read the database and take the data to String
     //make marker to the map
-    private Marker mTinHeng;
-    private static final LatLng TinHeng = new LatLng(22.4627, 114.0008);
+    private Marker mTinHeng, mTinChak, mFortunKingswood;
+    private static final LatLng TinHeng = new LatLng(22.4698, 114.0002);
+    private static final LatLng TinChak = new LatLng(22.4684, 113.9987);
+    private static final LatLng FortuneKingswood = new LatLng(22.4570, 114.0052);
+
+
     private void addMarkersToMap(){
 
-        mTinHeng = mGoogleMap.addMarker(new MarkerOptions()
-                .position(TinHeng)
-                .title("Tin Heng Estate Car Park")
-                .snippet("Population: 2,074,200")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        reff = FirebaseDatabase.getInstance().getReference().child("Park").child(firebaseAuth.getUid());
+        reff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String flexiblePriceFee = dataSnapshot.child("flexiblePriceFee").getValue().toString();
+                String minimunCharge = dataSnapshot.child("minimunCharge").getValue().toString();
+                String motor = dataSnapshot.child("motor").getValue().toString();
+                String parkAddress1 = dataSnapshot.child("parkAddress").getValue().toString();
+                String parkName1 = dataSnapshot.child("aaaParkName").getValue().toString();
+                String parkingFee1 = dataSnapshot.child("parkingFee").getValue().toString();
+                String privateCar = dataSnapshot.child("privateCar").getValue().toString();
+                String truck = dataSnapshot.child("truck").getValue().toString();
+
+                title = parkName1;
+                snippet = "Available parking slot: " + "\n" +
+                        "Motor: " + motor + "\n" +
+                        "Private car: " + privateCar + "\n" +
+                        "truck: " + truck + "\n" +
+                        "Price: $" + parkingFee1;
+
+                mTinHeng = mGoogleMap.addMarker(new MarkerOptions()
+                        .position(TinHeng)
+                        .title(parkName1)
+                        .snippet(snippet)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+                mTinChak = mGoogleMap.addMarker(new MarkerOptions()
+                        .position(TinChak)
+                        .title("Tin Chak Car Park")
+                        .snippet("222")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+                mFortunKingswood = mGoogleMap.addMarker(new MarkerOptions()
+                        .position(FortuneKingswood)
+                        .title("FortuneKingswood Car Park")
+                        .snippet("333")
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+                //custom map marker info window
+                if (mGoogleMap != null){
+                    mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                        @Override
+                        public View getInfoWindow(Marker marker) {
+                            return null;
+                        }
+
+                        @Override
+                        public View getInfoContents(Marker marker) {
+
+                            View row = getLayoutInflater().inflate(R.layout.custom_info_window,null);
+                            TextView tvtitle = (TextView)row.findViewById(R.id.title1);
+                            TextView tvsnippet = (TextView)row.findViewById(R.id.snippet);
+
+                            tvsnippet.setText(snippet);
+                            tvtitle.setText(title);
+
+
+
+                            return row;
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
     }
 
 
@@ -258,6 +340,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mGoogleMap = map;
         getDeviceLocation();
         addMarkersToMap();
+
     }
 
     @Override

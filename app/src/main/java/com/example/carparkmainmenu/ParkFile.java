@@ -19,10 +19,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.ProviderQueryResult;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+
+import java.util.regex.Pattern;
 
 
 public class ParkFile extends AppCompatActivity {
@@ -63,12 +66,17 @@ public class ParkFile extends AppCompatActivity {
         motor_Car = motor.getText().toString();
         private_Car = privateCar.getText().toString();
         truck_Car = truck.getText().toString();
-        parking_Fee = parkingFee.getText().toString();
-        minimun_Charge = minimunCharge.getText().toString();
+        parking_Fee = "$" + parkingFee.getText().toString();
+        minimun_Charge = "$" + minimunCharge.getText().toString();
         flexible_Fee = flexiblePriceFee.getText().toString();
         flexible_Fee = flexible_Fee.toLowerCase();
+        flexible_Pricing = "$" + parkingFee.getText().toString();
 
-        if (park_name.isEmpty() || park_address.isEmpty() || motor_Car.isEmpty() || private_Car.isEmpty() || truck_Car.isEmpty() || parking_Fee.isEmpty() || minimun_Charge.isEmpty() || flexible_Fee.isEmpty()) {
+
+        if (park_name.isEmpty() || park_address.isEmpty() || motor_Car.isEmpty()
+                || private_Car.isEmpty() || truck_Car.isEmpty()
+                || parking_Fee.isEmpty() || minimun_Charge.isEmpty()
+                || flexible_Fee.isEmpty()) {
             Toast.makeText(this, "please enter all the details", Toast.LENGTH_SHORT).show();
             return false;
 
@@ -129,6 +137,7 @@ public class ParkFile extends AppCompatActivity {
 
     }
 
+
     //logout and go to login page
     private void Logout() {
         firebaseAuth.signOut();
@@ -160,12 +169,13 @@ public class ParkFile extends AppCompatActivity {
         DatabaseReference myRef = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid());
         ParkUserProfile parkUserProfile = new ParkUserProfile(park_name, park_address, motor_Car, private_Car, truck_Car, parking_Fee, minimun_Charge, flexible_Fee);
         myRef.setValue(parkUserProfile);
+        Toast.makeText(ParkFile.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
     }
 
     private void sendParkingSlot(){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef2 = firebaseDatabase.getReference().child("AvailableParkingSlot").child(firebaseAuth.getUid());
-        ParkUserProfile_avaSlot parkUserProfile_avaSlot = new ParkUserProfile_avaSlot(park_name, motor_Car, private_Car, truck_Car);
+        DatabaseReference myRef2 = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid()).child("AvailableParkingSlot");
+        ParkUserProfile_avaSlot parkUserProfile_avaSlot = new ParkUserProfile_avaSlot(motor_Car, private_Car, truck_Car, flexible_Pricing);
         myRef2.setValue(parkUserProfile_avaSlot);
         Log.d(TAG, "Slot data sent!");
     }

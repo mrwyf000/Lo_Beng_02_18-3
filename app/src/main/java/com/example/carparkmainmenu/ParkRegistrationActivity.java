@@ -143,6 +143,8 @@ public class ParkRegistrationActivity extends AppCompatActivity {
     }
 
 
+
+
     //check the email is registered or not
     public void checkEmail(String email) {
         firebaseAuth.fetchProvidersForEmail(email).addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
