@@ -139,83 +139,83 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
 
-    private HashMap<String, Marker> mMarkers = new HashMap<>();
-    ArrayList<String> list;
-
-    private void parkList(){
-        list = new ArrayList<>();
-        reff = FirebaseDatabase.getInstance().getReference().child("Park");
-        reff.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-
-                    String lat = String.valueOf(dataSnapshot1.child("latitude").getValue());
-                    String lng = String.valueOf(dataSnapshot1.child("longitude").getValue());
-                    String minimunCharge = dataSnapshot1.child("minimunCharge").getValue().toString();
-                    String motor = dataSnapshot1.child("motor").getValue().toString();
-                    String parkAddress1 = dataSnapshot1.child("parkAddress").getValue().toString();
-                    String aaaParkName = dataSnapshot1.child("aaaParkName").getValue().toString();
-                    String parkingFee1 = dataSnapshot1.child("parkingFee").getValue().toString();
-                    String privateCar = dataSnapshot1.child("privateCar").getValue().toString();
-                    String truck = dataSnapshot1.child("truck").getValue().toString();
-                    String flexibleFee1 = dataSnapshot1.child("flexibleFee").getValue().toString();
-                    String avaMotor1 = dataSnapshot1.child("avaMotor").getValue().toString();
-                    String avaPrivateCar1 = dataSnapshot1.child("avaPrivateCar").getValue().toString();
-                    String avaTruck1 = dataSnapshot1.child("avaTruck").getValue().toString();
-
-                    Log.i("our value", "Park: " + aaaParkName + "   latLng: " + lat +","+ lng);
-
-                    title = aaaParkName;
-                    snippet = "Available parking slot: " + "\n" +
-                            "Motor: " + avaMotor1 + "\n" +
-                            "Private car: " + avaPrivateCar1 + "\n" +
-                            "truck: " + avaTruck1 + "\n" +
-                            "Normal Price: " + parkingFee1 + "\n" +
-                            "Current Price: " + flexibleFee1;
-
-                    mTinHeng = mGoogleMap.addMarker(new MarkerOptions()
-                            .position(lngTinHeng)
-                            .title(aaaParkName)
-                            .snippet(snippet)
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-
-                    mTinChak = mGoogleMap.addMarker(new MarkerOptions()
-                            .position(lngTinChak)
-                            .title(aaaParkName)
-                            .snippet(snippet)
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-
-                    if (mGoogleMap != null) {
-                        mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-                            @Override
-                            public View getInfoWindow(Marker marker) {
-                                return null;
-                            }
-                            @Override public View getInfoContents(Marker marker) {
-
-                                View row = getLayoutInflater().inflate(R.layout.custom_info_window, null);
-                                TextView tvtitle = (TextView) row.findViewById(R.id.title1);
-                                TextView tvsnippet = (TextView) row.findViewById(R.id.snippet);
-
-                                tvsnippet.setText(snippet);
-                                tvtitle.setText(title);
-
-                                return row;
-                            }
-                        });
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
+//    private HashMap<String, Marker> mMarkers = new HashMap<>();
+//    ArrayList<String> list;
+//
+//    private void parkList(){
+//        list = new ArrayList<>();
+//        reff = FirebaseDatabase.getInstance().getReference().child("Park");
+//        reff.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+//
+//                    String lat = String.valueOf(dataSnapshot1.child("latitude").getValue());
+//                    String lng = String.valueOf(dataSnapshot1.child("longitude").getValue());
+//                    String minimunCharge = dataSnapshot1.child("minimunCharge").getValue().toString();
+//                    String motor = dataSnapshot1.child("motor").getValue().toString();
+//                    String parkAddress1 = dataSnapshot1.child("parkAddress").getValue().toString();
+//                    String aaaParkName = dataSnapshot1.child("aaaParkName").getValue().toString();
+//                    String parkingFee1 = dataSnapshot1.child("parkingFee").getValue().toString();
+//                    String privateCar = dataSnapshot1.child("privateCar").getValue().toString();
+//                    String truck = dataSnapshot1.child("truck").getValue().toString();
+//                    String flexibleFee1 = dataSnapshot1.child("flexibleFee").getValue().toString();
+//                    String avaMotor1 = dataSnapshot1.child("avaMotor").getValue().toString();
+//                    String avaPrivateCar1 = dataSnapshot1.child("avaPrivateCar").getValue().toString();
+//                    String avaTruck1 = dataSnapshot1.child("avaTruck").getValue().toString();
+//
+//                    Log.i("our value", "Park: " + aaaParkName + "   latLng: " + lat +","+ lng);
+//
+//                    title = aaaParkName;
+//                    snippet = "Available parking slot: " + "\n" +
+//                            "Motor: " + avaMotor1 + "\n" +
+//                            "Private car: " + avaPrivateCar1 + "\n" +
+//                            "truck: " + avaTruck1 + "\n" +
+//                            "Normal Price: " + parkingFee1 + "\n" +
+//                            "Current Price: " + flexibleFee1;
+//
+//                    mTinHeng = mGoogleMap.addMarker(new MarkerOptions()
+//                            .position(lngTinHeng)
+//                            .title(aaaParkName)
+//                            .snippet(snippet)
+//                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+//
+//                    mTinChak = mGoogleMap.addMarker(new MarkerOptions()
+//                            .position(lngTinChak)
+//                            .title(aaaParkName)
+//                            .snippet(snippet)
+//                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+//
+//                    if (mGoogleMap != null) {
+//                        mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+//                            @Override
+//                            public View getInfoWindow(Marker marker) {
+//                                return null;
+//                            }
+//                            @Override public View getInfoContents(Marker marker) {
+//
+//                                View row = getLayoutInflater().inflate(R.layout.custom_info_window, null);
+//                                TextView tvtitle = (TextView) row.findViewById(R.id.title1);
+//                                TextView tvsnippet = (TextView) row.findViewById(R.id.snippet);
+//
+//                                tvsnippet.setText(snippet);
+//                                tvtitle.setText(title);
+//
+//                                return row;
+//                            }
+//                        });
+//                    }
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
 
     //read the database and take the data to String
