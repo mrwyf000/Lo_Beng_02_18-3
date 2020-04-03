@@ -1,0 +1,15 @@
+Index: app/src/main/java/com/example/carparkmainmenu/MapActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/carparkmainmenu/MapActivity.java	(date 1585419125000)
++++ app/src/main/java/com/example/carparkmainmenu/MapActivity.java	(date 1585420851699)
+@@ -101,7 +101,6 @@
+ 
+ 
+ 
+-
+     //make marker to the map
+     private Marker mTinHeng;
+     private static final LatLng TinHeng = new LatLng(22.4627, 114.0008);
