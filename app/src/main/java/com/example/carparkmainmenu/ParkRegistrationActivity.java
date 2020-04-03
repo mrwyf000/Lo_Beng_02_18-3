@@ -190,12 +190,17 @@ public class ParkRegistrationActivity extends AppCompatActivity {
         String private_Car = "";
         String truck_Car = "";
         String parking_Fee = "";
-        String minimun_Charge = "";
         String flexible_Fee = "";
+        String minimun_Charge = "";
+        String ava_Motor = "";
+        String ava_Private_Car = "";
+        String ava_Truck = "";
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid());
-        ParkUserProfile parkUserProfile = new ParkUserProfile(park_name, park_address, motor_Car, private_Car, truck_Car, parking_Fee, minimun_Charge, flexible_Fee);
+        ParkUserProfile parkUserProfile = new ParkUserProfile(
+                park_name, park_address, motor_Car, private_Car, truck_Car,
+                parking_Fee, flexible_Fee, minimun_Charge, ava_Motor, ava_Private_Car, ava_Truck);
         myRef.setValue(parkUserProfile);
     }
 }

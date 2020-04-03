@@ -19,7 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class takedata extends AppCompatActivity {
-    private TextView parkName,parkAddress, numberM, numberP, numberT, parkingFee, minCharge, flexiblePricing, refNum;
+    private TextView parkName,parkAddress, numberM, numberP, numberT, parkingFee, minCharge,
+            flexibleFee, avaMotor, avaPrivateCar, avaTruck, refNum;
     private Button update, logout;
     private DatabaseReference reff, myDatabaseRef;
     private FirebaseAuth firebaseAuth;
@@ -31,14 +32,18 @@ public class takedata extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_takedata);
 
-        parkName = (TextView)findViewById(R.id.edParkName);
-        parkAddress = (TextView)findViewById(R.id.edCarParkAddress);
-        numberM = (TextView)findViewById(R.id.edMotorcycle);
-        numberP = (TextView)findViewById(R.id.edPrivateCar);
+        parkName = (TextView) findViewById(R.id.edParkName);
+        parkAddress = (TextView) findViewById(R.id.edCarParkAddress);
+        numberM = (TextView) findViewById(R.id.edMotorcycle);
+        numberP = (TextView) findViewById(R.id.edPrivateCar);
         numberT = (TextView) findViewById(R.id.edTruck);
         parkingFee = (TextView) findViewById(R.id.edParkingFee);
         minCharge = (TextView) findViewById(R.id.edMinimunCharge);
-        flexiblePricing = (TextView) findViewById(R.id.edFlexiblePricingFee);
+        flexibleFee = (TextView) findViewById(R.id.tvFlexibleFee);
+        avaMotor = (TextView)findViewById(R.id.tvavaMotor);
+        avaPrivateCar = (TextView)findViewById(R.id.tvavaPrivateCar);
+        avaTruck = (TextView)findViewById(R.id.tvavaTruck);
+
         update = (Button) findViewById(R.id.btUpdate);
         logout = (Button) findViewById(R.id.btLogout);
 
@@ -51,36 +56,7 @@ public class takedata extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        reff = FirebaseDatabase.getInstance().getReference().child("Park").child(firebaseAuth.getUid());
-        reff.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String flexiblePriceFee = dataSnapshot.child("flexiblePriceFee").getValue().toString();
-                String minimunCharge = dataSnapshot.child("minimunCharge").getValue().toString();
-                String motor = dataSnapshot.child("motor").getValue().toString();
-                String parkAddress1 = dataSnapshot.child("parkAddress").getValue().toString();
-                String parkName1 = dataSnapshot.child("aaaParkName").getValue().toString();
-                String parkingFee1 = dataSnapshot.child("parkingFee").getValue().toString();
-                String privateCar = dataSnapshot.child("privateCar").getValue().toString();
-                String truck = dataSnapshot.child("truck").getValue().toString();
-
-                flexiblePricing.setText(flexiblePriceFee);
-                minCharge.setText(minimunCharge);
-                numberM.setText("motor: " + motor);
-                parkAddress.setText(parkAddress1);
-                parkName.setText(parkName1);
-                parkingFee.setText(parkingFee1);
-                numberP.setText("private car:" + privateCar);
-                numberT.setText("Truck: " + truck);
-
-                Toast.makeText(takedata.this, "Welcome back", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(takedata.this, "fail to connect to the database", Toast.LENGTH_SHORT).show();
-            }
-        });
+        getData();
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,8 +65,54 @@ public class takedata extends AppCompatActivity {
 
             }
         });
-
     }
+
+    private void getData(){
+        if (firebaseAuth != null) {
+            reff = FirebaseDatabase.getInstance().getReference().child("Park").child(firebaseAuth.getUid());
+            reff.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    String minimunCharge = dataSnapshot.child("minimunCharge").getValue().toString();
+                    String motor = dataSnapshot.child("motor").getValue().toString();
+                    String parkAddress1 = dataSnapshot.child("parkAddress").getValue().toString();
+                    String parkName1 = dataSnapshot.child("aaaParkName").getValue().toString();
+                    String parkingFee1 = dataSnapshot.child("parkingFee").getValue().toString();
+                    String privateCar = dataSnapshot.child("privateCar").getValue().toString();
+                    String truck = dataSnapshot.child("truck").getValue().toString();
+                    String flexibleFee1 = dataSnapshot.child("flexibleFee").getValue().toString();
+                    String avaMotor1 = dataSnapshot.child("avaMotor").getValue().toString();
+                    String avaPrivateCar1 = dataSnapshot.child("avaPrivateCar").getValue().toString();
+                    String avaTruck1 = dataSnapshot.child("avaTruck").getValue().toString();
+
+                    flexibleFee.setText(flexibleFee1);
+                    avaMotor.setText(avaMotor1);
+                    avaPrivateCar.setText(avaPrivateCar1);
+                    avaTruck.setText(avaTruck1);
+                    minCharge.setText(minimunCharge);
+                    numberM.setText("motor: " + motor);
+                    parkAddress.setText(parkAddress1);
+                    parkName.setText(parkName1);
+                    parkingFee.setText(parkingFee1);
+                    numberP.setText("private car:" + privateCar);
+                    numberT.setText("Truck: " + truck);
+
+
+
+                    Toast.makeText(takedata.this, "Welcome back", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(takedata.this, "fail to connect to the database", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Toast.makeText(takedata.this, "Please sign first", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void Logout() {
         firebaseAuth.signOut();
         finish();

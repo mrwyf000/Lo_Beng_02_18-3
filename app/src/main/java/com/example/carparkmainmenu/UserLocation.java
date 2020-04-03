@@ -7,13 +7,13 @@ import java.util.Date;
 
 public class UserLocation {
     private GeoPoint geo_point;
-    private  @ServerTimestamp Date timestamp;
+//    private  @ServerTimestamp Date timestamp;
     private User user;
 
     public UserLocation(GeoPoint geo_point, Date timestamp, User user) {
 
         this.geo_point = geo_point;
-        this.timestamp = timestamp;
+//        this.timestamp = timestamp;
         this.user = user;
     }
 
@@ -29,13 +29,13 @@ public class UserLocation {
         this.geo_point = geo_point;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
+//    public Date getTimestamp() {
+//        return timestamp;
+//    }
+//
+//    public void setTimestamp(Date timestamp) {
+//        this.timestamp = timestamp;
+//    }
 
     public User getUser() {
         return user;
@@ -49,7 +49,7 @@ public class UserLocation {
     public String toString() {
         return "UserLocation{" +
                 "geo_point=" + geo_point +
-                ", timestamp='" + timestamp + '\'' +
+//                ", timestamp='" + timestamp + '\'' +
                 ", user=" + user +
                 '}';
     }

@@ -28,6 +28,7 @@ import com.google.maps.android.clustering.ClusterManager;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -39,8 +40,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +54,7 @@ import androidx.core.app.ActivityCompat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,6 +66,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final String TAG = "MapActivity";
     private MapView mMapView;
 
+
+    private Button btBook;
+
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private GoogleMap mGoogleMap;
     private LatLngBounds mMapBoundary;
@@ -68,8 +76,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private FusedLocationProviderClient mFusedLocationClient;
     private LatLng latLng, userlocation;
     private MyClusterManagerRenderer myClusterManagerRenderer;
+
     private ClusterManager<ClusterMarker> mClusterManager;
     private ArrayList<ClusterMarker> mClusterMarkers = new ArrayList<>();
+
+
     float zoomLevel = 16.0f; //This goes up to 21
     private static final float DEFAULT_ZOOM = 15f;
     private ImageView mGps;
@@ -86,11 +97,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_fragment);
 
+        btBook = (Button)findViewById(R.id.btBook);
 
         mGps = (ImageView) findViewById(R.id.ic_gps);
         mSearchText = (EditText) findViewById(R.id.input_search);
@@ -112,24 +126,136 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
+        btBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MapActivity.this, ReservationActivity.class));
+            }
+        });
+
+
+//        parkList();
+
+    }
+
+
+
+
+    private HashMap<String, Marker> mMarkers = new HashMap<>();
+    ArrayList<String> list;
+
+    private void parkList(){
+        list = new ArrayList<>();
+        reff = FirebaseDatabase.getInstance().getReference().child("Park");
+        reff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+
+                    String lat = String.valueOf(dataSnapshot1.child("latitude").getValue());
+                    String lng = String.valueOf(dataSnapshot1.child("longitude").getValue());
+                    String minimunCharge = dataSnapshot1.child("minimunCharge").getValue().toString();
+                    String motor = dataSnapshot1.child("motor").getValue().toString();
+                    String parkAddress1 = dataSnapshot1.child("parkAddress").getValue().toString();
+                    String aaaParkName = dataSnapshot1.child("aaaParkName").getValue().toString();
+                    String parkingFee1 = dataSnapshot1.child("parkingFee").getValue().toString();
+                    String privateCar = dataSnapshot1.child("privateCar").getValue().toString();
+                    String truck = dataSnapshot1.child("truck").getValue().toString();
+                    String flexibleFee1 = dataSnapshot1.child("flexibleFee").getValue().toString();
+                    String avaMotor1 = dataSnapshot1.child("avaMotor").getValue().toString();
+                    String avaPrivateCar1 = dataSnapshot1.child("avaPrivateCar").getValue().toString();
+                    String avaTruck1 = dataSnapshot1.child("avaTruck").getValue().toString();
+
+                    Log.i("our value", "Park: " + aaaParkName + "   latLng: " + lat +","+ lng);
+
+                    title = aaaParkName;
+                    snippet = "Available parking slot: " + "\n" +
+                            "Motor: " + avaMotor1 + "\n" +
+                            "Private car: " + avaPrivateCar1 + "\n" +
+                            "truck: " + avaTruck1 + "\n" +
+                            "Normal Price: " + parkingFee1 + "\n" +
+                            "Current Price: " + flexibleFee1;
+
+                    mTinHeng = mGoogleMap.addMarker(new MarkerOptions()
+                            .position(lngTinHeng)
+                            .title(aaaParkName)
+                            .snippet(snippet)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+                    mTinChak = mGoogleMap.addMarker(new MarkerOptions()
+                            .position(lngTinChak)
+                            .title(aaaParkName)
+                            .snippet(snippet)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+                    if (mGoogleMap != null) {
+                        mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                            @Override
+                            public View getInfoWindow(Marker marker) {
+                                return null;
+                            }
+                            @Override public View getInfoContents(Marker marker) {
+
+                                View row = getLayoutInflater().inflate(R.layout.custom_info_window, null);
+                                TextView tvtitle = (TextView) row.findViewById(R.id.title1);
+                                TextView tvsnippet = (TextView) row.findViewById(R.id.snippet);
+
+                                tvsnippet.setText(snippet);
+                                tvtitle.setText(title);
+
+                                return row;
+                            }
+                        });
+                    }
+
+
+
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 
 
     //read the database and take the data to String
+    //set car park UID for take data
+    private String parkID, fdtinHeng, fdtinChak, fdtinYan, fdfortuneKingswood;
+
+
     //make marker to the map
     private Marker mTinHeng, mTinChak, mFortunKingswood;
-    private static final LatLng TinHeng = new LatLng(22.4698, 114.0002);
-    private static final LatLng TinChak = new LatLng(22.4684, 113.9987);
-    private static final LatLng FortuneKingswood = new LatLng(22.4570, 114.0052);
+    private static final LatLng lngTinHeng = new LatLng(22.4698, 114.0002);
+    private static final LatLng lngTinChak = new LatLng(22.4684, 113.9987);
+    private static final LatLng lngFortuneKingswood = new LatLng(22.4570, 114.0052);
 
 
-    private void addMarkersToMap(){
+    private void addMarkersToMap() {
+        //set the UID of the car park operator
+        fdtinHeng = "3hLZBaPJP0R736AIwgONmz85Aqo2";
+        fdtinChak = "2222";
+        fdtinYan =  "333";
 
-        reff = FirebaseDatabase.getInstance().getReference().child("Park").child(firebaseAuth.getUid());
+        infowindow(fdtinHeng);
+
+    }
+
+    //custom map marker info window
+    private void infowindow(String parkID) {
+
+        reff = FirebaseDatabase.getInstance().getReference().child("Park").child(parkID);
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String flexiblePriceFee = dataSnapshot.child("flexiblePriceFee").getValue().toString();
                 String minimunCharge = dataSnapshot.child("minimunCharge").getValue().toString();
                 String motor = dataSnapshot.child("motor").getValue().toString();
                 String parkAddress1 = dataSnapshot.child("parkAddress").getValue().toString();
@@ -137,51 +263,39 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 String parkingFee1 = dataSnapshot.child("parkingFee").getValue().toString();
                 String privateCar = dataSnapshot.child("privateCar").getValue().toString();
                 String truck = dataSnapshot.child("truck").getValue().toString();
+                String flexibleFee1 = dataSnapshot.child("flexibleFee").getValue().toString();
+                String avaMotor1 = dataSnapshot.child("avaMotor").getValue().toString();
+                String avaPrivateCar1 = dataSnapshot.child("avaPrivateCar").getValue().toString();
+                String avaTruck1 = dataSnapshot.child("avaTruck").getValue().toString();
 
                 title = parkName1;
                 snippet = "Available parking slot: " + "\n" +
-                        "Motor: " + motor + "\n" +
-                        "Private car: " + privateCar + "\n" +
-                        "truck: " + truck + "\n" +
-                        "Price: $" + parkingFee1;
+                        "Motor: " + avaMotor1 + "\n" +
+                        "Private car: " + avaPrivateCar1 + "\n" +
+                        "truck: " + avaTruck1 + "\n" +
+                        "Normal Price: " + parkingFee1 + "\n" +
+                        "Current Price: " + flexibleFee1;
 
                 mTinHeng = mGoogleMap.addMarker(new MarkerOptions()
-                        .position(TinHeng)
+                        .position(lngTinHeng)
                         .title(parkName1)
                         .snippet(snippet)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
-                mTinChak = mGoogleMap.addMarker(new MarkerOptions()
-                        .position(TinChak)
-                        .title("Tin Chak Car Park")
-                        .snippet("222")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-
-                mFortunKingswood = mGoogleMap.addMarker(new MarkerOptions()
-                        .position(FortuneKingswood)
-                        .title("FortuneKingswood Car Park")
-                        .snippet("333")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-
-                //custom map marker info window
-                if (mGoogleMap != null){
+                if (mGoogleMap != null) {
                     mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
                         @Override
                         public View getInfoWindow(Marker marker) {
                             return null;
                         }
+                        @Override public View getInfoContents(Marker marker) {
 
-                        @Override
-                        public View getInfoContents(Marker marker) {
-
-                            View row = getLayoutInflater().inflate(R.layout.custom_info_window,null);
-                            TextView tvtitle = (TextView)row.findViewById(R.id.title1);
-                            TextView tvsnippet = (TextView)row.findViewById(R.id.snippet);
+                            View row = getLayoutInflater().inflate(R.layout.custom_info_window, null);
+                            TextView tvtitle = (TextView) row.findViewById(R.id.title1);
+                            TextView tvsnippet = (TextView) row.findViewById(R.id.snippet);
 
                             tvsnippet.setText(snippet);
                             tvtitle.setText(title);
-
-
 
                             return row;
                         }
@@ -192,11 +306,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
     }
-
-
-
 
 
     //move the camera function
@@ -279,12 +389,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     Location currentlocation = task.getResult();
                     assert currentlocation != null;
                     float zoomLevel = 16.0f; //This goes up to 21
-                    String title;
+                    String title = null;
                     LatLng latLng = new LatLng(currentlocation.getLatitude(), currentlocation.getLongitude());
 
                     mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
                     Log.d(TAG, "latLng: " + latLng.toString());
                     Toast.makeText(MapActivity.this, "center your location", Toast.LENGTH_SHORT).show();
+
+                    moveCamera(latLng, zoomLevel, null);
+
                 }
             }
         });
@@ -342,6 +455,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         addMarkersToMap();
 
     }
+
+    public void onInfoWindowClick(Marker marker) {
+        Toast.makeText(this, "Info window clicked",
+                Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     protected void onPause() {

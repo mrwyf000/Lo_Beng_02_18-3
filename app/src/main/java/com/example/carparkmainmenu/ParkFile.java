@@ -3,6 +3,7 @@ package com.example.carparkmainmenu;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,12 +37,14 @@ public class ParkFile extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
     private Button logout, submit;
-    private EditText parkName, parkAddress, motor, privateCar, truck, parkingFee, minimunCharge,flexiblePricing, flexiblePriceFee;
-    //private CheckBox flexiblePricing, mcHalfHour, mcOneHour, mcTwoHour;
-    String park_name, park_address, motor_Car, private_Car, truck_Car, parking_Fee, halfhr, onehr, twohr, flexible_Pricing, minimun_Charge, flexible_Fee;
+    private EditText parkName, parkAddress, motor, privateCar, truck, parkingFee, minimunCharge,avamotor, avaprivateCar, avaTruck;
+    private TextView flexibleFee;
+    String park_name, park_address, motor_Car, private_Car, truck_Car, parking_Fee,
+            halfhr, onehr, twohr, flexible_Pricing, minimun_Charge, flexible_Fee, ava_Motor, ava_Private_Car, ava_Truck;
     String name, email;
 
     //set up
+    @SuppressLint("CutPasteId")
     private void setupUIViews() {
         parkName = (EditText) findViewById(R.id.edParkName);
         parkAddress = (EditText) findViewById(R.id.edCarParkAddress);
@@ -50,7 +53,11 @@ public class ParkFile extends AppCompatActivity {
         truck = (EditText) findViewById(R.id.edTruck);
         parkingFee = (EditText) findViewById(R.id.edParkingFee);
         minimunCharge = (EditText) findViewById(R.id.edMinimunCharge);
-        flexiblePriceFee = (EditText) findViewById(R.id.edFlexiblePricingFee);
+        flexibleFee = (TextView) findViewById(R.id.tvFlexibleFee);
+        avamotor = (EditText)findViewById(R.id.edMotorcycle2);
+        avaprivateCar = (EditText)findViewById(R.id.edMotorcycle2);
+        avaTruck = (EditText)findViewById(R.id.edTruck2);
+
         //flexiblePricing = (CheckBox) findViewById(R.id.cbFlexiblePricing);
         //mcHalfHour = (CheckBox) findViewById(R.id.cbMCHalfHour);
         //mcOneHour = (CheckBox) findViewById(R.id.cbMCOneHour);
@@ -68,23 +75,26 @@ public class ParkFile extends AppCompatActivity {
         truck_Car = truck.getText().toString();
         parking_Fee = "$" + parkingFee.getText().toString();
         minimun_Charge = "$" + minimunCharge.getText().toString();
-        flexible_Fee = flexiblePriceFee.getText().toString();
-        flexible_Fee = flexible_Fee.toLowerCase();
+        flexible_Fee = "$" + parkingFee.getText().toString();
         flexible_Pricing = "$" + parkingFee.getText().toString();
+        ava_Motor = avamotor.getText().toString();
+        ava_Private_Car = avaprivateCar.getText().toString();
+        ava_Truck = avaTruck.getText().toString();
 
 
         if (park_name.isEmpty() || park_address.isEmpty() || motor_Car.isEmpty()
                 || private_Car.isEmpty() || truck_Car.isEmpty()
-                || parking_Fee.isEmpty() || minimun_Charge.isEmpty()
-                || flexible_Fee.isEmpty()) {
+                || parking_Fee.isEmpty() || minimun_Charge.isEmpty() ||
+                ava_Motor.isEmpty() || ava_Private_Car.isEmpty() || ava_Truck.isEmpty()) {
             Toast.makeText(this, "please enter all the details", Toast.LENGTH_SHORT).show();
             return false;
 
         }
-        if (!(flexible_Fee.equals("yes") || flexible_Fee.equals("no"))) {
-            Toast.makeText(this, "Flexible Fee needed to be Yes or No", Toast.LENGTH_SHORT).show();
-            return false;
-        }else {
+//        if (!(flexible_Fee.equals("yes") || flexible_Fee.equals("no"))) {
+//            Toast.makeText(this, "Flexible Fee needed to be Yes or No", Toast.LENGTH_SHORT).show();
+//            return false;
+//            }
+        else {
             result = true;
         }
 
@@ -123,7 +133,7 @@ public class ParkFile extends AppCompatActivity {
                 if (firebaseUser!=null) {
                     if (validate()) {
                         sendUserData();
-                        sendParkingSlot();
+//                      sendParkingSlot();
                         Toast.makeText(ParkFile.this, "upload successful", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(ParkFile.this, takedata.class));
                     } else {
@@ -167,17 +177,19 @@ public class ParkFile extends AppCompatActivity {
     private void sendUserData()  {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid());
-        ParkUserProfile parkUserProfile = new ParkUserProfile(park_name, park_address, motor_Car, private_Car, truck_Car, parking_Fee, minimun_Charge, flexible_Fee);
+        ParkUserProfile parkUserProfile = new ParkUserProfile(
+                park_name, park_address, motor_Car, private_Car, truck_Car,
+                parking_Fee, minimun_Charge, flexible_Fee, ava_Motor, ava_Private_Car, ava_Truck);
         myRef.setValue(parkUserProfile);
         Toast.makeText(ParkFile.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
     }
 
-    private void sendParkingSlot(){
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef2 = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid()).child("AvailableParkingSlot");
-        ParkUserProfile_avaSlot parkUserProfile_avaSlot = new ParkUserProfile_avaSlot(motor_Car, private_Car, truck_Car, flexible_Pricing);
-        myRef2.setValue(parkUserProfile_avaSlot);
-        Log.d(TAG, "Slot data sent!");
-    }
+//    private void sendParkingSlot(){
+//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef2 = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid()).child("AvailableParkingSlot");
+//        ParkUserProfile_avaSlot parkUserProfile_avaSlot = new ParkUserProfile_avaSlot(motor_Car, private_Car, truck_Car, flexible_Pricing);
+//        myRef2.setValue(parkUserProfile_avaSlot);
+//        Log.d(TAG, "Slot data sent!");
+//    }
 
 }
