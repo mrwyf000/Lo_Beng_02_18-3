@@ -133,11 +133,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-
 //        parkList();
 
     }
-
 
 
 
@@ -209,10 +207,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         });
                     }
 
-
-
-
-
                 }
             }
 
@@ -221,9 +215,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             }
         });
-
-
-
     }
 
 
