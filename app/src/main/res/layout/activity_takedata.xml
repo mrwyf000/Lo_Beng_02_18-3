@@ -30,7 +30,7 @@
         app:layout_constraintHorizontal_bias="0.106"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintVertical_bias="0.401" />
 
     <TextView
         android:id="@+id/edMotorcycle"
@@ -258,9 +258,10 @@
         app:layout_constraintTop_toBottomOf="@+id/tvCarParkInf"
         app:layout_constraintVertical_bias="0.024" />
 
+
     <TextView
         android:id="@+id/edParkName"
-        android:layout_width="199dp"
+        android:layout_width="177dp"
         android:layout_height="40dp"
         android:ems="10"
         android:hint="Car Park Name"
@@ -268,11 +269,10 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.122"
+        app:layout_constraintHorizontal_bias="0.111"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvParkName"
         app:layout_constraintVertical_bias="0.0" />
-
 
     <TextView
         android:id="@+id/tvFlexibleFee"
@@ -303,8 +303,8 @@
 
     <TextView
         android:id="@+id/edCarParkAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="172dp"
+        android:layout_height="96dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Car Park Address"
@@ -315,5 +315,60 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tvParkAddress"
         app:layout_constraintTop_toBottomOf="@+id/tvParkAddress"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.125" />
+
+    <TextView
+        android:id="@+id/edLat"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.863"
+        app:layout_constraintStart_toStartOf="@+id/tvParkingFee"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.143" />
+
+    <TextView
+        android:id="@+id/tvLatitude"
+        android:layout_width="68dp"
+        android:layout_height="22dp"
+        android:text="Latitude"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.793"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.111" />
+
+    <TextView
+        android:id="@+id/tvLongitude"
+        android:layout_width="84dp"
+        android:layout_height="24dp"
+        android:text="Longitude"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.831"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.199" />
+
+    <TextView
+        android:id="@+id/edLng"
+        android:layout_width="100dp"
+        android:layout_height="24dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.863"
+        app:layout_constraintStart_toStartOf="@+id/tvParkingFee"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.233" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

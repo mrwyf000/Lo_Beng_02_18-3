@@ -13,13 +13,15 @@ public class ParkUserProfile {
     public String avaMotor;
     public String avaPrivateCar;
     public String avaTruck;
+    public String latitude;
+    public String longitude;
 
 
 
     // this."name show in firebase" = "id used in program"
     public ParkUserProfile(String parkName, String parkAddress, String motor, String privateCar,
                            String truck, String parkingFee, String flexibleFee, String minimunCharge,
-                           String avaMotor, String avaPrivateCar, String avaTruck) {
+                           String avaMotor, String avaPrivateCar, String avaTruck, String latitude, String longitude) {
         this.aaaParkName = parkName;
         this.parkAddress = parkAddress;
         this.motor = motor;
@@ -31,11 +33,15 @@ public class ParkUserProfile {
         this.avaMotor = avaMotor;
         this.avaPrivateCar = avaPrivateCar;
         this.avaTruck = avaTruck;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public ParkUserProfile() {
 
     }
+
+
 
     public String getAaaParkName() {
         return aaaParkName;
@@ -123,5 +129,21 @@ public class ParkUserProfile {
 
     public void setAvaTruck(String avaTruck) {
         this.avaTruck = avaTruck;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 }

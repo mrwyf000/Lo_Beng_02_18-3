@@ -17,10 +17,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.snapshot.DoubleNode;
 
 public class takedata extends AppCompatActivity {
     private TextView parkName,parkAddress, numberM, numberP, numberT, parkingFee, minCharge,
-            flexibleFee, avaMotor, avaPrivateCar, avaTruck, refNum;
+            flexibleFee, avaMotor, avaPrivateCar, avaTruck, latitude, longitude;
     private Button update, logout;
     private DatabaseReference reff, myDatabaseRef;
     private FirebaseAuth firebaseAuth;
@@ -43,6 +44,8 @@ public class takedata extends AppCompatActivity {
         avaMotor = (TextView)findViewById(R.id.tvavaMotor);
         avaPrivateCar = (TextView)findViewById(R.id.tvavaPrivateCar);
         avaTruck = (TextView)findViewById(R.id.tvavaTruck);
+        latitude = (TextView)findViewById(R.id.edLat);
+        longitude = (TextView)findViewById(R.id.edLng);
 
         update = (Button) findViewById(R.id.btUpdate);
         logout = (Button) findViewById(R.id.btLogout);
@@ -74,6 +77,8 @@ public class takedata extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                    String lat = String.valueOf(dataSnapshot.child("latitude").getValue());
+                    String lng = String.valueOf(dataSnapshot.child("longitude").getValue());
                     String minimunCharge = dataSnapshot.child("minimunCharge").getValue().toString();
                     String motor = dataSnapshot.child("motor").getValue().toString();
                     String parkAddress1 = dataSnapshot.child("parkAddress").getValue().toString();
@@ -86,19 +91,35 @@ public class takedata extends AppCompatActivity {
                     String avaPrivateCar1 = dataSnapshot.child("avaPrivateCar").getValue().toString();
                     String avaTruck1 = dataSnapshot.child("avaTruck").getValue().toString();
 
-                    flexibleFee.setText(flexibleFee1);
+                    double dprivate, davaprivate, dflexibleFee1, dparkingFee1, dminimunCharge;
+                    dprivate = Double.parseDouble(privateCar);
+                    davaprivate = Double.parseDouble(avaPrivateCar1);
+                    dflexibleFee1 = Double.parseDouble(flexibleFee1);
+                    dparkingFee1 = Double.parseDouble(parkingFee1);
+                    dminimunCharge = Double.parseDouble(minimunCharge);
+                    if (davaprivate <= 0.2*dprivate && davaprivate > 0.1*dprivate) {
+                        dflexibleFee1 = dflexibleFee1 * 2;
+                    }else if(davaprivate <= 0.1*dprivate){
+                        dflexibleFee1 = dflexibleFee1 * 3;
+                    }else{
+                    }
+                    flexibleFee1 = String.valueOf(dflexibleFee1);
+                    parkingFee1 = String.valueOf(dparkingFee1);
+                    minimunCharge = String.valueOf(dminimunCharge);
+
+                    flexibleFee.setText("$" +flexibleFee1);
                     avaMotor.setText(avaMotor1);
                     avaPrivateCar.setText(avaPrivateCar1);
                     avaTruck.setText(avaTruck1);
-                    minCharge.setText(minimunCharge);
+                    minCharge.setText("$" +minimunCharge);
                     numberM.setText("motor: " + motor);
                     parkAddress.setText(parkAddress1);
                     parkName.setText(parkName1);
-                    parkingFee.setText(parkingFee1);
-                    numberP.setText("private car:" + privateCar);
+                    parkingFee.setText("$" +parkingFee1);
+                    numberP.setText("private car: " + privateCar);
                     numberT.setText("Truck: " + truck);
-
-
+                    latitude.setText(lat);
+                    longitude.setText(lng);
 
                     Toast.makeText(takedata.this, "Welcome back", Toast.LENGTH_SHORT).show();
                 }

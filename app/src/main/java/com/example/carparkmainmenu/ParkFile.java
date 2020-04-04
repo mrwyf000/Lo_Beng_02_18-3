@@ -31,16 +31,28 @@ import java.util.regex.Pattern;
 
 public class ParkFile extends AppCompatActivity {
 
+    //set the password pattern, the password must be at least...
+    private static final Pattern price_Patten =
+            Pattern.compile("^" +
+                    "(?=.*[0-9])" +         //at least 1 digit
+                    //"(?=.*[a-z])" +         //at least 1 lower case letter
+                    //"(?=.*[A-Z])" +         //at least 1 upper case letter
+                    //"(?=.*[a-zA-Z])" +      //any letter
+                    //"(?=\\S+$)" +           //no white spaces
+                    //".{8,}" +               //at least 8 characters
+                    "$");
+
     private static final String TAG = "ParkFile";
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
     private Button logout, submit;
-    private EditText parkName, parkAddress, motor, privateCar, truck, parkingFee, minimunCharge,avamotor, avaprivateCar, avaTruck;
+    private EditText parkName, parkAddress, motor, privateCar, truck, parkingFee, minimunCharge,avamotor, avaprivateCar, avaTruck, latitude, longitude;
     private TextView flexibleFee;
     String park_name, park_address, motor_Car, private_Car, truck_Car, parking_Fee,
-            halfhr, onehr, twohr, flexible_Pricing, minimun_Charge, flexible_Fee, ava_Motor, ava_Private_Car, ava_Truck;
+            halfhr, onehr, twohr, flexible_Pricing, minimun_Charge, flexible_Fee,
+            ava_Motor, ava_Private_Car, ava_Truck, lat_latitude, lng_longitude;
     String name, email;
 
     //set up
@@ -57,6 +69,9 @@ public class ParkFile extends AppCompatActivity {
         avamotor = (EditText)findViewById(R.id.edMotorcycle2);
         avaprivateCar = (EditText)findViewById(R.id.edMotorcycle2);
         avaTruck = (EditText)findViewById(R.id.edTruck2);
+        latitude = (EditText)findViewById(R.id.edLat);
+        longitude = (EditText)findViewById(R.id.edLng);
+
 
         //flexiblePricing = (CheckBox) findViewById(R.id.cbFlexiblePricing);
         //mcHalfHour = (CheckBox) findViewById(R.id.cbMCHalfHour);
@@ -73,22 +88,35 @@ public class ParkFile extends AppCompatActivity {
         motor_Car = motor.getText().toString();
         private_Car = privateCar.getText().toString();
         truck_Car = truck.getText().toString();
-        parking_Fee = "$" + parkingFee.getText().toString();
-        minimun_Charge = "$" + minimunCharge.getText().toString();
-        flexible_Fee = "$" + parkingFee.getText().toString();
-        flexible_Pricing = "$" + parkingFee.getText().toString();
+        parking_Fee = parkingFee.getText().toString();
+        minimun_Charge = minimunCharge.getText().toString();
+        flexible_Fee =  parkingFee.getText().toString();
+        flexible_Pricing = parkingFee.getText().toString();
         ava_Motor = avamotor.getText().toString();
         ava_Private_Car = avaprivateCar.getText().toString();
         ava_Truck = avaTruck.getText().toString();
+        lat_latitude = latitude.getText().toString();
+        lng_longitude = longitude.getText().toString();
 
 
         if (park_name.isEmpty() || park_address.isEmpty() || motor_Car.isEmpty()
                 || private_Car.isEmpty() || truck_Car.isEmpty()
-                || parking_Fee.isEmpty() || minimun_Charge.isEmpty() ||
-                ava_Motor.isEmpty() || ava_Private_Car.isEmpty() || ava_Truck.isEmpty()) {
+                || parking_Fee.isEmpty() || minimun_Charge.isEmpty()
+                || ava_Motor.isEmpty() || ava_Private_Car.isEmpty() || ava_Truck.isEmpty()
+                || lat_latitude.isEmpty() || lng_longitude.isEmpty()){
             Toast.makeText(this, "please enter all the details", Toast.LENGTH_SHORT).show();
             return false;
+        }
 
+//        }if (!price_Patten.matcher(parking_Fee).matches()) {
+//            Toast.makeText(this, "Please enter only digit amount for the parking fee", Toast.LENGTH_SHORT).show();
+//            return false;
+
+        if (Double.parseDouble(ava_Motor) > Double.parseDouble(motor_Car)
+                ||Double.parseDouble(ava_Private_Car) > Double.parseDouble(private_Car)
+                ||Double.parseDouble(ava_Truck) > Double.parseDouble(truck_Car)){
+            Toast.makeText(this, "Number of Empty Slot should not larger than number of Parking Slot", Toast.LENGTH_SHORT).show();
+            return false;
         }
 //        if (!(flexible_Fee.equals("yes") || flexible_Fee.equals("no"))) {
 //            Toast.makeText(this, "Flexible Fee needed to be Yes or No", Toast.LENGTH_SHORT).show();
@@ -179,7 +207,7 @@ public class ParkFile extends AppCompatActivity {
         DatabaseReference myRef = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid());
         ParkUserProfile parkUserProfile = new ParkUserProfile(
                 park_name, park_address, motor_Car, private_Car, truck_Car,
-                parking_Fee, minimun_Charge, flexible_Fee, ava_Motor, ava_Private_Car, ava_Truck);
+                parking_Fee, minimun_Charge, flexible_Fee, ava_Motor, ava_Private_Car, ava_Truck, lat_latitude, lng_longitude);
         myRef.setValue(parkUserProfile);
         Toast.makeText(ParkFile.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
     }

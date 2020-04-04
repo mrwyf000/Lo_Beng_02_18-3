@@ -8,6 +8,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -30,6 +31,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.LevelListDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -133,89 +139,80 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-//        parkList();
+        parkList();
 
     }
+//adapter for custer the info-window size
 
 
+    private Marker mMarker;
+    private void parkList(){
 
-//    private HashMap<String, Marker> mMarkers = new HashMap<>();
-//    ArrayList<String> list;
-//
-//    private void parkList(){
-//        list = new ArrayList<>();
-//        reff = FirebaseDatabase.getInstance().getReference().child("Park");
-//        reff.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-//
-//                    String lat = String.valueOf(dataSnapshot1.child("latitude").getValue());
-//                    String lng = String.valueOf(dataSnapshot1.child("longitude").getValue());
-//                    String minimunCharge = dataSnapshot1.child("minimunCharge").getValue().toString();
-//                    String motor = dataSnapshot1.child("motor").getValue().toString();
-//                    String parkAddress1 = dataSnapshot1.child("parkAddress").getValue().toString();
-//                    String aaaParkName = dataSnapshot1.child("aaaParkName").getValue().toString();
-//                    String parkingFee1 = dataSnapshot1.child("parkingFee").getValue().toString();
-//                    String privateCar = dataSnapshot1.child("privateCar").getValue().toString();
-//                    String truck = dataSnapshot1.child("truck").getValue().toString();
-//                    String flexibleFee1 = dataSnapshot1.child("flexibleFee").getValue().toString();
-//                    String avaMotor1 = dataSnapshot1.child("avaMotor").getValue().toString();
-//                    String avaPrivateCar1 = dataSnapshot1.child("avaPrivateCar").getValue().toString();
-//                    String avaTruck1 = dataSnapshot1.child("avaTruck").getValue().toString();
-//
-//                    Log.i("our value", "Park: " + aaaParkName + "   latLng: " + lat +","+ lng);
-//
-//                    title = aaaParkName;
-//                    snippet = "Available parking slot: " + "\n" +
-//                            "Motor: " + avaMotor1 + "\n" +
-//                            "Private car: " + avaPrivateCar1 + "\n" +
-//                            "truck: " + avaTruck1 + "\n" +
-//                            "Normal Price: " + parkingFee1 + "\n" +
-//                            "Current Price: " + flexibleFee1;
-//
-//                    mTinHeng = mGoogleMap.addMarker(new MarkerOptions()
-//                            .position(lngTinHeng)
-//                            .title(aaaParkName)
-//                            .snippet(snippet)
-//                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-//
-//                    mTinChak = mGoogleMap.addMarker(new MarkerOptions()
-//                            .position(lngTinChak)
-//                            .title(aaaParkName)
-//                            .snippet(snippet)
-//                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-//
-//                    if (mGoogleMap != null) {
-//                        mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-//                            @Override
-//                            public View getInfoWindow(Marker marker) {
-//                                return null;
-//                            }
-//                            @Override public View getInfoContents(Marker marker) {
-//
-//                                View row = getLayoutInflater().inflate(R.layout.custom_info_window, null);
-//                                TextView tvtitle = (TextView) row.findViewById(R.id.title1);
-//                                TextView tvsnippet = (TextView) row.findViewById(R.id.snippet);
-//
-//                                tvsnippet.setText(snippet);
-//                                tvtitle.setText(title);
-//
-//                                return row;
-//                            }
-//                        });
-//                    }
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
+        reff = FirebaseDatabase.getInstance().getReference().child("Park");
+        reff.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+
+                    String lat = String.valueOf(dataSnapshot1.child("latitude").getValue());
+                    String lng = String.valueOf(dataSnapshot1.child("longitude").getValue());
+                    String minimunCharge = dataSnapshot1.child("minimunCharge").getValue().toString();
+                    String motor = dataSnapshot1.child("motor").getValue().toString();
+                    String parkAddress1 = dataSnapshot1.child("parkAddress").getValue().toString();
+                    String aaaParkName = dataSnapshot1.child("aaaParkName").getValue().toString();
+                    String parkingFee1 = dataSnapshot1.child("parkingFee").getValue().toString();
+                    String privateCar = dataSnapshot1.child("privateCar").getValue().toString();
+                    String truck = dataSnapshot1.child("truck").getValue().toString();
+                    String flexibleFee1 = dataSnapshot1.child("flexibleFee").getValue().toString();
+                    String avaMotor1 = dataSnapshot1.child("avaMotor").getValue().toString();
+                    String avaPrivateCar1 = dataSnapshot1.child("avaPrivateCar").getValue().toString();
+                    String avaTruck1 = dataSnapshot1.child("avaTruck").getValue().toString();
+
+                    LatLng latLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+
+                    double dprivate, davaprivate, dflexibleFee1, dparkingFee1,dminimunCharge;
+                    dprivate = Double.parseDouble(privateCar);
+                    davaprivate = Double.parseDouble(avaPrivateCar1);
+                    dflexibleFee1 = Double.parseDouble(flexibleFee1);
+                    dparkingFee1 = Double.parseDouble(parkingFee1);
+                    dminimunCharge = Double.parseDouble(minimunCharge);
+                    if (davaprivate <= 0.2*dprivate && davaprivate > 0.1*dprivate) {
+                        dflexibleFee1 = dflexibleFee1 * 2;
+                    }else if(davaprivate <= 0.1*dprivate){
+                        dflexibleFee1 = dflexibleFee1 * 3;
+                    }else{
+                    }
+                    flexibleFee1 = String.valueOf(dflexibleFee1);
+                    parkingFee1 = String.valueOf(dparkingFee1);
+                    minimunCharge = String.valueOf(dminimunCharge);
+
+                    String snippet = aaaParkName + "\n" +
+                            "Available parking slot: " + "\n" +
+                            "Motor: " + avaMotor1 + "\n" +
+                            "Private car: " + avaPrivateCar1 + "\n" +
+                            "truck: " + avaTruck1 + "\n" +
+                            "Normal Price: $" + parkingFee1 + "\n" +
+                            "Current Price: $" + flexibleFee1;
+
+                    mMarker = mGoogleMap.addMarker(new MarkerOptions()
+                            .position(latLng)
+                            .title(title)
+                            .snippet(snippet)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                    if (mGoogleMap != null) {
+                        mGoogleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MapActivity.this));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
 
 
     //read the database and take the data to String
@@ -223,80 +220,92 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private String parkID, fdtinHeng, fdtinChak, fdtinYan, fdfortuneKingswood;
 
 
-    //make marker to the map
-    private Marker mTinHeng, mTinChak, mFortunKingswood;
-    private static final LatLng lngTinHeng = new LatLng(22.4698, 114.0002);
-    private static final LatLng lngTinChak = new LatLng(22.4684, 113.9987);
-    private static final LatLng lngFortuneKingswood = new LatLng(22.4570, 114.0052);
+//    //make marker to the map
+//    private Marker mTinHeng, mTinChak, mMarker;
+//    private static final LatLng lngTinHeng = new LatLng(22.4698, 114.0002);
+//    private static final LatLng lngTinChak = new LatLng(22.4684, 113.9987);
+//    private static final LatLng lngFortuneKingswood = new LatLng(22.4570, 114.0052);
+//
+//
+//    private void addMarkersToMap() {
+//        //set the UID of the car park operator
+//        String fdtinHeng = "3hLZBaPJP0R736AIwgONmz85Aqo2";
+//        String fdtinChak = "OEgCxUXsT1Ta9HtjYJ1aHVa0mk13";
+//        String fdtinYan =  "TUn3QNNacEUzyfEKQPrgPnj1Hkt1";
+//
+//        infowindow(fdtinHeng);
+//        infowindow(fdtinChak);
+//        infowindow(fdtinYan);
+//
+//    }
 
-
-    private void addMarkersToMap() {
-        //set the UID of the car park operator
-        fdtinHeng = "3hLZBaPJP0R736AIwgONmz85Aqo2";
-        fdtinChak = "2222";
-        fdtinYan =  "333";
-
-        infowindow(fdtinHeng);
-
-    }
 
     //custom map marker info window
     private void infowindow(String parkID) {
 
-        reff = FirebaseDatabase.getInstance().getReference().child("Park").child(parkID);
-        reff.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String minimunCharge = dataSnapshot.child("minimunCharge").getValue().toString();
-                String motor = dataSnapshot.child("motor").getValue().toString();
-                String parkAddress1 = dataSnapshot.child("parkAddress").getValue().toString();
-                String parkName1 = dataSnapshot.child("aaaParkName").getValue().toString();
-                String parkingFee1 = dataSnapshot.child("parkingFee").getValue().toString();
-                String privateCar = dataSnapshot.child("privateCar").getValue().toString();
-                String truck = dataSnapshot.child("truck").getValue().toString();
-                String flexibleFee1 = dataSnapshot.child("flexibleFee").getValue().toString();
-                String avaMotor1 = dataSnapshot.child("avaMotor").getValue().toString();
-                String avaPrivateCar1 = dataSnapshot.child("avaPrivateCar").getValue().toString();
-                String avaTruck1 = dataSnapshot.child("avaTruck").getValue().toString();
+//        reff = FirebaseDatabase.getInstance().getReference().child("Park").child(parkID);
+//        reff.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                String minimunCharge = dataSnapshot.child("minimunCharge").getValue().toString();
+//                String motor = dataSnapshot.child("motor").getValue().toString();
+//                String parkAddress1 = dataSnapshot.child("parkAddress").getValue().toString();
+//                String parkName1 = dataSnapshot.child("aaaParkName").getValue().toString();
+//                String parkingFee1 = dataSnapshot.child("parkingFee").getValue().toString();
+//                String privateCar = dataSnapshot.child("privateCar").getValue().toString();
+//                String truck = dataSnapshot.child("truck").getValue().toString();
+//                String flexibleFee1 = dataSnapshot.child("flexibleFee").getValue().toString();
+//                String avaMotor1 = dataSnapshot.child("avaMotor").getValue().toString();
+//                String avaPrivateCar1 = dataSnapshot.child("avaPrivateCar").getValue().toString();
+//                String avaTruck1 = dataSnapshot.child("avaTruck").getValue().toString();
+//                String lat = String.valueOf(dataSnapshot.child("latitude").getValue());
+//                String lng = String.valueOf(dataSnapshot.child("longitude").getValue());
+//
+//                LatLng latLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+//
+//                title = parkName1;
+//                snippet = "Available parking slot: " + "\n" +
+//                        "Motor: " + avaMotor1 + "\n" +
+//                        "Private car: " + avaPrivateCar1 + "\n" +
+//                        "truck: " + avaTruck1 + "\n" +
+//                        "Normal Price: " + parkingFee1 + "\n" +
+//                        "Current Price: " + flexibleFee1;
+//
+//                mMarker = mGoogleMap.addMarker(new MarkerOptions()
+//                        .position(latLng)
+//                        .title(parkName1)
+//                        .snippet(snippet)
+//                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+//                Log.d(TAG, "snippet: " + snippet);
 
-                title = parkName1;
-                snippet = "Available parking slot: " + "\n" +
-                        "Motor: " + avaMotor1 + "\n" +
-                        "Private car: " + avaPrivateCar1 + "\n" +
-                        "truck: " + avaTruck1 + "\n" +
-                        "Normal Price: " + parkingFee1 + "\n" +
-                        "Current Price: " + flexibleFee1;
 
-                mTinHeng = mGoogleMap.addMarker(new MarkerOptions()
-                        .position(lngTinHeng)
-                        .title(parkName1)
-                        .snippet(snippet)
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
-                if (mGoogleMap != null) {
-                    mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-                        @Override
-                        public View getInfoWindow(Marker marker) {
-                            return null;
-                        }
-                        @Override public View getInfoContents(Marker marker) {
-
-                            View row = getLayoutInflater().inflate(R.layout.custom_info_window, null);
-                            TextView tvtitle = (TextView) row.findViewById(R.id.title1);
-                            TextView tvsnippet = (TextView) row.findViewById(R.id.snippet);
-
-                            tvsnippet.setText(snippet);
-                            tvtitle.setText(title);
-
-                            return row;
-                        }
-                    });
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+//                mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+//                    @Override
+//                    public View getInfoWindow(Marker marker) {
+//                        return null;
+//                    }
+//
+//                    @Override
+//                    public View getInfoContents(Marker marker) {
+//
+//                        View row = getLayoutInflater().inflate(R.layout.custom_info_window, null);
+//                        TextView tvtitle = (TextView) row.findViewById(R.id.title1);
+//                        TextView tvsnippet = (TextView) row.findViewById(R.id.snippet);
+//
+//                        tvsnippet.setText(snippet);
+//                        tvtitle.setText(title);
+//
+//                        return row;
+//                    }
+//
+//
+//                });
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//            }
+//        });
     }
 
 
@@ -307,7 +316,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(title));
         hideKeyboard(MapActivity.this);
 
-        mGoogleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MapActivity.this));
+//        mGoogleMap.setInfoWindowAdapter(new poisInfoWindowAdapter(MapActivity.this));
+
 
     }
 
@@ -443,7 +453,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map.setMyLocationEnabled(true);
         mGoogleMap = map;
         getDeviceLocation();
-        addMarkersToMap();
+//        addMarkersToMap();
+
+
 
     }
 
