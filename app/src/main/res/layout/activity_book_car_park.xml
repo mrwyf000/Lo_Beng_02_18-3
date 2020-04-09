@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="35dp">
+
+
+    <TextView
+        android:id="@+id/tvinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="25sp"
+        android:text="Car Park Information" />
+
+    <TextView
+        android:id="@+id/tvempty4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+
+    <TextView
+        android:id="@+id/tvParkName1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="ParkName" />
+    <TextView
+        android:id="@+id/tvempty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="" />
+    <TextView
+        android:id="@+id/tvParkAddress1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Address" />
+    <TextView
+        android:id="@+id/tvempty1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="" />
+    <TextView
+        android:id="@+id/tvTotal1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Total Parking Slots" />
+    <TextView
+        android:id="@+id/tvMotor1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="motor" />
+    <TextView
+        android:id="@+id/tvPrivateCar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="TextView" />
+    <TextView
+        android:id="@+id/tvTruck1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="TextView" />
+    <TextView
+        android:id="@+id/tvempty2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="" />
+    <TextView
+        android:id="@+id/tvAva1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Available Parking Slots" />
+    <TextView
+        android:id="@+id/tvavaMotor1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="motor" />
+    <TextView
+        android:id="@+id/tvavaPrivateCar1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="TextView" />
+    <TextView
+        android:id="@+id/tvavaTruck1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="TextView" />
+    <TextView
+        android:id="@+id/tvempty3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="" />
+    <TextView
+        android:id="@+id/tvNormalPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Normal Price" />
+    <TextView
+        android:id="@+id/tvMinCharge1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Min. Charge" />
+    <TextView
+        android:id="@+id/tvCurrentPrice1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Current Price" />
+
+    <Button
+        android:id="@+id/btBook"
+        android:layout_width="105dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:text="Book" />
+
+    <Button
+        android:id="@+id/btBack"
+        android:layout_width="105dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:text="Back" />
+
+</LinearLayout>

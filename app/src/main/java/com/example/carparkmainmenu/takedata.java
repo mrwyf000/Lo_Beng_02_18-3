@@ -1,6 +1,7 @@
 package com.example.carparkmainmenu;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,7 +25,7 @@ public class takedata extends AppCompatActivity {
     private TextView parkName,parkAddress, numberM, numberP, numberT, parkingFee, minCharge,
             flexibleFee, avaMotor, avaPrivateCar, avaTruck, latitude, longitude;
     private Button update, logout;
-    private DatabaseReference reff, myDatabaseRef;
+    private DatabaseReference reff, myDatabaseRef, reff1;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
 
@@ -72,11 +74,18 @@ public class takedata extends AppCompatActivity {
 
     private void getData(){
         if (firebaseAuth != null) {
-            reff = FirebaseDatabase.getInstance().getReference().child("Park").child(firebaseAuth.getUid());
-            reff.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//            reff1 = FirebaseDatabase.getInstance().getReference().child("Park").child(firebaseAuth.getUid());
 
+            reff = FirebaseDatabase.getInstance().getReference().child("Park").child(firebaseAuth.getUid());
+            reff.addChildEventListener(new ChildEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                    Toast.makeText(takedata.this, "Welcome back", Toast.LENGTH_SHORT).show();
+//                }
+
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     String lat = String.valueOf(dataSnapshot.child("latitude").getValue());
                     String lng = String.valueOf(dataSnapshot.child("longitude").getValue());
                     String minimunCharge = dataSnapshot.child("minimunCharge").getValue().toString();
@@ -107,21 +116,34 @@ public class takedata extends AppCompatActivity {
                     parkingFee1 = String.valueOf(dparkingFee1);
                     minimunCharge = String.valueOf(dminimunCharge);
 
-                    flexibleFee.setText("$" +flexibleFee1);
+                    flexibleFee.setText("$" +flexibleFee1 + "/hr");
                     avaMotor.setText(avaMotor1);
                     avaPrivateCar.setText(avaPrivateCar1);
                     avaTruck.setText(avaTruck1);
-                    minCharge.setText("$" +minimunCharge);
+                    minCharge.setText("$" +minimunCharge +"/hr");
                     numberM.setText("motor: " + motor);
                     parkAddress.setText(parkAddress1);
                     parkName.setText(parkName1);
-                    parkingFee.setText("$" +parkingFee1);
+                    parkingFee.setText("$" +parkingFee1 + "/hr");
                     numberP.setText("private car: " + privateCar);
                     numberT.setText("Truck: " + truck);
                     latitude.setText(lat);
                     longitude.setText(lng);
+                }
 
-                    Toast.makeText(takedata.this, "Welcome back", Toast.LENGTH_SHORT).show();
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
                 }
 
                 @Override

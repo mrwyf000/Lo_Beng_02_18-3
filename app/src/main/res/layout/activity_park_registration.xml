@@ -48,19 +48,19 @@
         android:layout_height="wrap_content"
         android:text="Registration"
         android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/edUserName"
+        app:layout_constraintBottom_toTopOf="@+id/edParkName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.633" />
 
     <EditText
-        android:id="@+id/edUserName"
+        android:id="@+id/edParkName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
-        android:hint="User Name"
+        android:hint="Park Name"
         android:inputType="textPersonName"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -81,8 +81,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.737"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edUserName"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.272" />
 
     <EditText
         android:id="@+id/edUserPassword"

@@ -320,7 +320,7 @@
     <TextView
         android:id="@+id/edLat"
         android:layout_width="100dp"
-        android:layout_height="25dp"
+        android:layout_height="40dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:textSize="14sp"
@@ -329,7 +329,7 @@
         app:layout_constraintHorizontal_bias="0.863"
         app:layout_constraintStart_toStartOf="@+id/tvParkingFee"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.143" />
+        app:layout_constraintVertical_bias="0.146" />
 
     <TextView
         android:id="@+id/tvLatitude"
@@ -360,7 +360,7 @@
     <TextView
         android:id="@+id/edLng"
         android:layout_width="100dp"
-        android:layout_height="24dp"
+        android:layout_height="40dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:textSize="14sp"
@@ -369,6 +369,6 @@
         app:layout_constraintHorizontal_bias="0.863"
         app:layout_constraintStart_toStartOf="@+id/tvParkingFee"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.233" />
+        app:layout_constraintVertical_bias="0.238" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

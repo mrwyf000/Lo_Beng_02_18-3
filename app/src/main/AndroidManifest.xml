@@ -23,7 +23,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReservationActivity"></activity>
+        <activity android:name=".PaymentActivity"></activity>
+        <activity
+            android:name=".BookCarParkActivity"
+            android:parentActivityName=".ReservationActivity" />
+        <activity
+            android:name=".ReservationActivity"
+            android:parentActivityName=".MapActivity" />
         <activity android:name=".ParkUserProfile_avaSlot" />
         <activity android:name=".MapActivity" />
         <!--

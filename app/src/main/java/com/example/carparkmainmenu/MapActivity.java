@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,6 +56,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -101,10 +103,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     //widgets
     private EditText mSearchText;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +112,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mGps = (ImageView) findViewById(R.id.ic_gps);
         mSearchText = (EditText) findViewById(R.id.input_search);
-
 
         // *** IMPORTANT ***
         // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
@@ -149,11 +146,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void parkList(){
 
         reff = FirebaseDatabase.getInstance().getReference().child("Park");
-        reff.addValueEventListener(new ValueEventListener() {
+        reff.addChildEventListener(new ChildEventListener() {
+
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//
+//            }
 
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
                     String lat = String.valueOf(dataSnapshot1.child("latitude").getValue());
@@ -192,9 +194,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             "Available parking slot: " + "\n" +
                             "Motor: " + avaMotor1 + "\n" +
                             "Private car: " + avaPrivateCar1 + "\n" +
-                            "truck: " + avaTruck1 + "\n" +
-                            "Normal Price: $" + parkingFee1 + "\n" +
-                            "Current Price: $" + flexibleFee1;
+                            "Truck: " + avaTruck1 + "\n" +
+                            "Normal Price: $" + parkingFee1 + "/hr \n" +
+                            "Current Price: $" + flexibleFee1 + "/hr";
 
                     mMarker = mGoogleMap.addMarker(new MarkerOptions()
                             .position(latLng)
@@ -205,6 +207,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         mGoogleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MapActivity.this));
                     }
                 }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
             }
 
             @Override
@@ -313,7 +330,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void moveCamera(LatLng latLng, float zoomLevel, String title){
         Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude );
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
-        mGoogleMap.addMarker(new MarkerOptions().position(latLng).title(title));
         hideKeyboard(MapActivity.this);
 
 //        mGoogleMap.setInfoWindowAdapter(new poisInfoWindowAdapter(MapActivity.this));
@@ -357,7 +373,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Log.d(TAG, "geoLocate: geolocating");
 
         String searchString = mSearchText.getText().toString();
-
         Geocoder geocoder = new Geocoder(MapActivity.this);
         List<Address> list = new ArrayList<>();
         try {
@@ -367,15 +382,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
         if (list.size() > 0){
             Address address = list.get(0);
-
             Log.d(TAG, "geoLocate found a location: " + address.toString());
-            //Toast.makeText(this, address.toString(), Toast.LENGTH_SHORT).show();
 
-            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), zoomLevel, address.getAddressLine(0));
+            latLng = new LatLng(address.getLatitude(), address.getLongitude());
+            moveCamera(latLng, zoomLevel, address.getAddressLine(0));
+            mGoogleMap.addMarker(new MarkerOptions().position(latLng).snippet(address.getFeatureName()));
 
 
         }
-
     }
 
     //get user current location

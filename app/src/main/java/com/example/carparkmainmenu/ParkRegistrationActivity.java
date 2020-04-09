@@ -34,18 +34,18 @@ public class ParkRegistrationActivity extends AppCompatActivity {
                     ".{8,}" +               //at least 8 characters
                     "$");
 
-    private EditText userName, userEmail, userPassword, userPassword2;
+    private EditText parkName, userEmail, userPassword, userPassword2;
     private Button regButton, backButton, checkEmail;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     String park_name, park_address, motor_Car, private_Car, truck_Car, parking_Fee, halfhr, onehr, twohr, flexible_Pricing, minimun_Charge, flexible_Fee;
-    String name, email, password, password2;
+    String park_Name, email, password, password2;
 
 
 
     //set up
     private void setupUIViews() {
-        userName = (EditText) findViewById(R.id.edUserName);
+        parkName = (EditText) findViewById(R.id.edParkName);
         userEmail = (EditText) findViewById(R.id.edUserEmail);
         userPassword = (EditText) findViewById(R.id.edUserPassword);
         userPassword2 = (EditText) findViewById(R.id.edUserPassword2);
@@ -59,13 +59,13 @@ public class ParkRegistrationActivity extends AppCompatActivity {
     private boolean validate() {
         boolean result = false;
 
-        name = userName.getText().toString();
+        park_Name = parkName.getText().toString();
         email = userEmail.getText().toString();
         password = userPassword.getText().toString();
         password2 = userPassword2.getText().toString();
 
 
-        if (name.isEmpty() || password.isEmpty() || email.isEmpty() || password2.isEmpty()) {
+        if (park_Name.isEmpty() || password.isEmpty() || email.isEmpty() || password2.isEmpty()) {
             Toast.makeText(this, "please enter all the details", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -184,22 +184,22 @@ public class ParkRegistrationActivity extends AppCompatActivity {
     }
 
     private void sendUserData() {
-        String park_name = "";
-        String park_address = "";
-        String motor_Car = "";
-        String private_Car = "";
-        String truck_Car = "";
-        String parking_Fee = "";
-        String flexible_Fee = "";
-        String minimun_Charge = "";
-        String ava_Motor = "";
-        String ava_Private_Car = "";
-        String ava_Truck = "";
-        String lat_latitude = "";
-        String lng_longitude = "";
+        String park_name = park_Name;
+        String park_address = "0";
+        String motor_Car = "0";
+        String private_Car = "0";
+        String truck_Car = "0";
+        String parking_Fee = "0";
+        String flexible_Fee = "0";
+        String minimun_Charge = "0";
+        String ava_Motor = "0";
+        String ava_Private_Car = "0";
+        String ava_Truck = "0";
+        String lat_latitude = "0";
+        String lng_longitude = "0";
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid());
+        DatabaseReference myRef = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid()).child(park_name + "1");
         ParkUserProfile parkUserProfile = new ParkUserProfile(
                 park_name, park_address, motor_Car, private_Car, truck_Car,
                 parking_Fee, flexible_Fee, minimun_Charge, ava_Motor, ava_Private_Car, ava_Truck, lat_latitude, lng_longitude);

@@ -66,5 +66,13 @@ dependencies {
 
 //    implementation 'com.google.android.gms:play-services:11.4.0'
 
+//    //fireStore
+//    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+//    implementation 'com.google.firebase:firebase-firestore:18.1.0'
+//    implementation 'com.jakewharton:butterknife:8.8.1'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+
+
 
 }

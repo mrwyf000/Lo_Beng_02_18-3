@@ -250,7 +250,7 @@
         app:layout_constraintVertical_bias="0.428" />
 
     <Button
-        android:id="@+id/btLogout"
+        android:id="@+id/btBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Logout"
