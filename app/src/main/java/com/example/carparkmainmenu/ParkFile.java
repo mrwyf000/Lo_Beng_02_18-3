@@ -1,30 +1,22 @@
 package com.example.carparkmainmenu;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.ProviderQueryResult;
-import com.google.firebase.auth.UserInfo;
-import com.google.firebase.database.FirebaseDatabase;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.regex.Pattern;
 
@@ -176,32 +168,51 @@ public class ParkFile extends AppCompatActivity {
     }
 
 
-    //logout and go to login page
-    private void Logout() {
-        firebaseAuth.signOut();
-        finish();
-        Toast.makeText(ParkFile.this, "Logout Successful", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(ParkFile.this, CarParkLogin.class));
-    }
-
-    //create a menu bar
+    //toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
-    //logout from menu bar
+    private void Logout() {
+        if (firebaseAuth != null) {
+            firebaseAuth.signOut();
+            finish();
+            Toast.makeText(ParkFile.this, "Logout Successful", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(ParkFile.this, CarParkLogin.class));
+        }else {
+            Toast.makeText(ParkFile.this, "You have not login yet", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.logoutMenu: {
                 Logout();
+                break;
+            }
+            case R.id.mapMenu: {
+                startActivity(new Intent(ParkFile.this, MapActivity.class));
+                break;
+            }
+            case R.id.profileMenu:{
+                startActivity(new Intent(ParkFile.this, takedata.class));
+                break;
+            }
+            case R.id.carParkRegMenu:{
+                startActivity(new Intent(ParkFile.this, ParkRegistrationActivity.class));
+                break;
+            }
+            case R.id.refreshMenu:{
+                startActivity(new Intent(ParkFile.this, ParkFile.class));
+                break;
             }
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void sendUserData()  {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference myRef = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid()).child(park_name + "1");

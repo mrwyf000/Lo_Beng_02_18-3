@@ -1,16 +1,17 @@
 package com.example.carparkmainmenu;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -18,8 +19,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.snapshot.DoubleNode;
 
 public class takedata extends AppCompatActivity {
     private TextView parkName,parkAddress, numberM, numberP, numberT, parkingFee, minCharge,
@@ -161,5 +160,40 @@ public class takedata extends AppCompatActivity {
         finish();
         Toast.makeText(takedata.this, "Logout Successful", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(takedata.this, CarParkLogin.class));
+    }
+
+    //toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logoutMenu: {
+                Logout();
+                break;
+            }
+            case R.id.mapMenu: {
+                startActivity(new Intent(takedata.this, MapActivity.class));
+                break;
+            }
+            case R.id.profileMenu:{
+                Toast.makeText(takedata.this, "you are already in profile page",Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.carParkRegMenu:{
+                startActivity(new Intent(takedata.this, ParkRegistrationActivity.class));
+                break;
+            }
+            case R.id.refreshMenu:{
+                startActivity(new Intent(takedata.this, takedata.class));
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

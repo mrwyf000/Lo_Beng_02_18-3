@@ -1,14 +1,34 @@
 package com.example.carparkmainmenu;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.carparkmainmenu.ui.map.ClusterMarker;
-import com.google.android.gms.common.api.Result;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -24,47 +44,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.GeoPoint;
 import com.google.maps.android.clustering.ClusterManager;
-
-import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.LevelListDrawable;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * This shows how to create a simple activity with a raw MapView and add a marker to it. This
@@ -126,9 +110,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMapView.getMapAsync(this);
         init();
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-
         btBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,9 +120,56 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         parkList();
 
     }
-//adapter for custer the info-window size
 
+    //toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+    private void Logout() {
+        if (firebaseAuth != null) {
+            firebaseAuth.signOut();
+            finish();
+            Toast.makeText(MapActivity.this, "Logout Successful", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(MapActivity.this, "You have not login yet", Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.logoutMenu: {
+                Logout();
+                break;
+            }
+            case R.id.mapMenu: {
+                Toast.makeText(MapActivity.this, "You are already in MapActivity", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.profileMenu:{
+                if (firebaseAuth != null) {
+                    startActivity(new Intent(MapActivity.this, takedata.class));
+                }else {
+                    Toast.makeText(MapActivity.this, "You have not login yet", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+            case R.id.carParkRegMenu:{
+                startActivity(new Intent(MapActivity.this, ParkRegistrationActivity.class));
+                break;
+            }
+            case R.id.refreshMenu:{
+                startActivity(new Intent(MapActivity.this, MapActivity.class));
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //adapter for custer the info-window size
     private Marker mMarker;
     private void parkList(){
 

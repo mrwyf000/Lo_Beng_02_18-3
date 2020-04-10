@@ -1,12 +1,5 @@
 package com.example.carparkmainmenu;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -15,36 +8,41 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+
     private TextView EasyPark;
     private Button Driver, CarPark;
 
-    private static final String TAG = "MainActivity";
     public static final int ERROR_DIALOG_REQUEST = 9001;
     public static final int PERMISSIONS_REQUEST_ENABLE_GPS = 9002;
     public static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 9003;
@@ -52,8 +50,12 @@ public class MainActivity extends AppCompatActivity {
     private FusedLocationProviderClient mFusedLocationClient;
     private UserLocation mUserLoation;
     private FirebaseFirestore mDb;
+    private FirebaseAuth firebaseAuth;
 
 
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +87,59 @@ public class MainActivity extends AppCompatActivity {
 
         getLastKnowLocation();
 
+
+
+    }
+
+
+    //toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    private void Logout() {
+        if (firebaseAuth != null) {
+            firebaseAuth.signOut();
+            finish();
+            Toast.makeText(MainActivity.this, "Logout Successful", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(MainActivity.this, "You have not login yet", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.logoutMenu: {
+                Logout();
+                break;
+            }
+            case R.id.mapMenu: {
+                startActivity(new Intent(MainActivity.this, MapActivity.class));
+                break;
+            }
+            case R.id.profileMenu:{
+                if (firebaseAuth != null) {
+                    startActivity(new Intent(MainActivity.this, takedata.class));
+                }else {
+                    Toast.makeText(MainActivity.this, "You have not login yet", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+            case R.id.carParkRegMenu:{
+                startActivity(new Intent(MainActivity.this, ParkRegistrationActivity.class));
+                break;
+            }
+            case R.id.refreshMenu:{
+                startActivity(new Intent(MainActivity.this, MainActivity.class));
+                break;
+            }
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //private void getUserDetails() {
@@ -269,5 +324,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
 
 }
