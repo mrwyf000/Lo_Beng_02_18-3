@@ -152,6 +152,10 @@ public class CarParkLogin extends AppCompatActivity {
                 Logout();
                 break;
             }
+            case R.id.loginMenu:{
+                Toast.makeText(CarParkLogin.this, "You are at login page", Toast.LENGTH_SHORT).show();
+                break;
+            }
             case R.id.mapMenu: {
                 startActivity(new Intent(CarParkLogin.this, MapActivity.class));
                 break;

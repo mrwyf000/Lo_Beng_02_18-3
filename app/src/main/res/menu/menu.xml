@@ -12,9 +12,16 @@
     </item>
 
     <item
-        android:id="@+id/logoutMenu"
+        android:id="@+id/loginMenu"
         android:orderInCategory="200"
         app:showAsAction="always"
+        android:title="Login">
+    </item>
+
+    <item
+        android:id="@+id/logoutMenu"
+        android:orderInCategory="600"
+        app:showAsAction="never"
         android:title="Logout">
     </item>
 
@@ -38,6 +45,7 @@
         app:showAsAction="never"
         android:title="Refresh">
     </item>
+
 
 
 </menu>

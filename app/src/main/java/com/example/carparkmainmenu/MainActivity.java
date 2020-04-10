@@ -120,6 +120,17 @@ public class MainActivity extends AppCompatActivity {
                 Logout();
                 break;
             }
+            case R.id.loginMenu:{
+                firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    Toast.makeText(MainActivity.this, "You are already login", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    startActivity(new Intent(MainActivity.this, CarParkLogin.class));
+                }
+                break;
+            }
             case R.id.mapMenu: {
                 startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;

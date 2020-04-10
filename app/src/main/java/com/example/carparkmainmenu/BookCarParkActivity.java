@@ -136,6 +136,17 @@ public class BookCarParkActivity extends AppCompatActivity {
                 Logout();
                 break;
             }
+            case R.id.loginMenu:{
+                firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    Toast.makeText(BookCarParkActivity.this, "You are already login", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    startActivity(new Intent(BookCarParkActivity.this, CarParkLogin.class));
+                }
+                break;
+            }
             case R.id.mapMenu: {
                 startActivity(new Intent(BookCarParkActivity.this, MapActivity.class));
                 break;

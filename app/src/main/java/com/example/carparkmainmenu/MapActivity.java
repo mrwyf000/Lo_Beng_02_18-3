@@ -147,6 +147,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 Logout();
                 break;
             }
+            case R.id.loginMenu:{
+                firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    Toast.makeText(MapActivity.this, "You are already login", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    startActivity(new Intent(MapActivity.this, CarParkLogin.class));
+                }
+                break;
+            }
             case R.id.mapMenu: {
                 Toast.makeText(MapActivity.this, "You are already in MapActivity", Toast.LENGTH_SHORT).show();
                 break;

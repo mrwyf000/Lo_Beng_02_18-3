@@ -178,6 +178,17 @@ public class ParkRegistrationActivity extends AppCompatActivity {
                 Logout();
                 break;
             }
+            case R.id.loginMenu:{
+                firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    Toast.makeText(ParkRegistrationActivity.this, "You are already login", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    startActivity(new Intent(ParkRegistrationActivity.this, CarParkLogin.class));
+                }
+                break;
+            }
             case R.id.mapMenu: {
                 startActivity(new Intent(ParkRegistrationActivity.this, MapActivity.class));
                 break;

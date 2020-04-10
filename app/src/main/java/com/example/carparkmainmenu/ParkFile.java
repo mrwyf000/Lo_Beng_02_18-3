@@ -192,6 +192,17 @@ public class ParkFile extends AppCompatActivity {
                 Logout();
                 break;
             }
+            case R.id.loginMenu:{
+                firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    Toast.makeText(ParkFile.this, "You are already login", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    startActivity(new Intent(ParkFile.this, CarParkLogin.class));
+                }
+                break;
+            }
             case R.id.mapMenu: {
                 startActivity(new Intent(ParkFile.this, MapActivity.class));
                 break;
