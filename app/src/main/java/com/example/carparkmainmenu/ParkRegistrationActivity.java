@@ -159,7 +159,9 @@ public class ParkRegistrationActivity extends AppCompatActivity {
     }
 
     private void Logout() {
-        if (firebaseAuth != null) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
             firebaseAuth.signOut();
             finish();
             Toast.makeText(ParkRegistrationActivity.this, "Logout Successful", Toast.LENGTH_SHORT).show();
@@ -181,7 +183,9 @@ public class ParkRegistrationActivity extends AppCompatActivity {
                 break;
             }
             case R.id.profileMenu:{
-                if (firebaseAuth != null) {
+                firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
                     startActivity(new Intent(ParkRegistrationActivity.this, takedata.class));
                 }else {
                     Toast.makeText(ParkRegistrationActivity.this, "You have not login yet", Toast.LENGTH_SHORT).show();

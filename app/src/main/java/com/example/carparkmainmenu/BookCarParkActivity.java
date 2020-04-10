@@ -1,30 +1,24 @@
 package com.example.carparkmainmenu;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class BookCarParkActivity extends AppCompatActivity {
     private static final String TAG = "BookCarParkActivity";
+
+    FirebaseAuth firebaseAuth;
 
     private Button btBack,btBook;
     private TextView parkName,parkAddress, numberM, numberP, numberT, parkingFee, minCharge,
@@ -113,5 +107,58 @@ public class BookCarParkActivity extends AppCompatActivity {
                 startActivity(new Intent(BookCarParkActivity.this, PaymentActivity.class));
             }
         });
+    }
+
+
+    //toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+    private void Logout() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            firebaseAuth.signOut();
+            finish();
+            Toast.makeText(BookCarParkActivity.this, "Logout Successful", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(BookCarParkActivity.this, "You have not login yet", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.logoutMenu: {
+                Logout();
+                break;
+            }
+            case R.id.mapMenu: {
+                startActivity(new Intent(BookCarParkActivity.this, MapActivity.class));
+                break;
+            }
+            case R.id.profileMenu:{
+                firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    startActivity(new Intent(BookCarParkActivity.this, takedata.class));
+                }else {
+                    Toast.makeText(BookCarParkActivity.this, "You have not login yet", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+            case R.id.carParkRegMenu:{
+                startActivity(new Intent(BookCarParkActivity.this, ParkRegistrationActivity.class));
+                break;
+            }
+            case R.id.refreshMenu:{
+                startActivity(new Intent(BookCarParkActivity.this, BookCarParkActivity.class));
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

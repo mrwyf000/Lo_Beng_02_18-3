@@ -31,6 +31,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
@@ -100,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void Logout() {
-        if (firebaseAuth != null) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
             firebaseAuth.signOut();
             finish();
             Toast.makeText(MainActivity.this, "Logout Successful", Toast.LENGTH_SHORT).show();
@@ -122,7 +125,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case R.id.profileMenu:{
-                if (firebaseAuth != null) {
+                firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
                     startActivity(new Intent(MainActivity.this, takedata.class));
                 }else {
                     Toast.makeText(MainActivity.this, "You have not login yet", Toast.LENGTH_SHORT).show();

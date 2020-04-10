@@ -39,6 +39,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -128,9 +129,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return true;
     }
     private void Logout() {
-        if (firebaseAuth != null) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
             firebaseAuth.signOut();
-            finish();
             Toast.makeText(MapActivity.this, "Logout Successful", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(MapActivity.this, "You have not login yet", Toast.LENGTH_SHORT).show();
@@ -150,7 +152,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 break;
             }
             case R.id.profileMenu:{
-                if (firebaseAuth != null) {
+                firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
                     startActivity(new Intent(MapActivity.this, takedata.class));
                 }else {
                     Toast.makeText(MapActivity.this, "You have not login yet", Toast.LENGTH_SHORT).show();

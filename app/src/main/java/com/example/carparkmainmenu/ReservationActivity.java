@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -204,7 +205,9 @@ public class ReservationActivity extends AppCompatActivity {
     }
 
     private void Logout() {
-        if (firebaseAuth != null) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
             firebaseAuth.signOut();
             finish();
             Toast.makeText(ReservationActivity.this, "Logout Successful", Toast.LENGTH_SHORT).show();
@@ -227,7 +230,9 @@ public class ReservationActivity extends AppCompatActivity {
                 break;
             }
             case R.id.profileMenu:{
-                if (firebaseAuth != null) {
+                firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
                     startActivity(new Intent(ReservationActivity.this, takedata.class));
                 }else {
                     Toast.makeText(ReservationActivity.this, "You have not login yet", Toast.LENGTH_SHORT).show();

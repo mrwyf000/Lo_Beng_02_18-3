@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class PaymentActivity extends AppCompatActivity {
 
@@ -29,7 +30,9 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void Logout() {
-        if (firebaseAuth != null) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
             firebaseAuth.signOut();
             finish();
             Toast.makeText(PaymentActivity.this, "Logout Successful", Toast.LENGTH_SHORT).show();
@@ -51,7 +54,9 @@ public class PaymentActivity extends AppCompatActivity {
                 break;
             }
             case R.id.profileMenu:{
-                if (firebaseAuth != null) {
+                firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
                     startActivity(new Intent(PaymentActivity.this, takedata.class));
                 }else {
                     Toast.makeText(PaymentActivity.this, "You have not login yet", Toast.LENGTH_SHORT).show();

@@ -133,7 +133,9 @@ public class CarParkLogin extends AppCompatActivity {
         return true;
     }
     private void Logout() {
-        if (firebaseAuth != null) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
             firebaseAuth.signOut();
             finish();
             Toast.makeText(CarParkLogin.this, "Logout Successful", Toast.LENGTH_SHORT).show();
@@ -151,11 +153,13 @@ public class CarParkLogin extends AppCompatActivity {
                 break;
             }
             case R.id.mapMenu: {
-                Toast.makeText(CarParkLogin.this, "You are already in MapActivity", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CarParkLogin.this, MapActivity.class));
                 break;
             }
             case R.id.profileMenu:{
-                if (firebaseAuth != null) {
+                firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
                     startActivity(new Intent(CarParkLogin.this, takedata.class));
                 }else {
                     Toast.makeText(CarParkLogin.this, "You have not login yet", Toast.LENGTH_SHORT).show();

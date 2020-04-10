@@ -130,25 +130,22 @@ public class ParkFile extends AppCompatActivity {
 
         submit = (Button) findViewById(R.id.btSubmit);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-
-
-        logout = (Button) findViewById(R.id.btLogout);
+//        logout = (Button) findViewById(R.id.btLogout);
 
         //logout button
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Logout();
-            }
-        });
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Logout();
+//            }
+//        });
 
         //upload user information button
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                firebaseAuth = FirebaseAuth.getInstance();
+                firebaseDatabase = FirebaseDatabase.getInstance();
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser!=null) {
                     if (validate()) {
@@ -176,7 +173,9 @@ public class ParkFile extends AppCompatActivity {
     }
 
     private void Logout() {
-        if (firebaseAuth != null) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
             firebaseAuth.signOut();
             finish();
             Toast.makeText(ParkFile.this, "Logout Successful", Toast.LENGTH_SHORT).show();
