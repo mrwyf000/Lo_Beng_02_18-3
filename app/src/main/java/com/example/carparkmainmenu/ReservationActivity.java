@@ -71,7 +71,9 @@ public class ReservationActivity extends AppCompatActivity {
         listMinimunCharge = new ArrayList<>();
         listCurrentPrice = new ArrayList<>();
 
-        adapter = new ArrayAdapter<String>(ReservationActivity.this, R.layout.park_user_info, R.id.parkUserInfo, list);
+        adapter = new ArrayAdapter<String>(ReservationActivity.this,
+                R.layout.park_user_info, R.id.parkUserInfo, list);
+
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -161,7 +163,6 @@ public class ReservationActivity extends AppCompatActivity {
                         intent.putExtra(EXTRA_CP, currentPrice);
 
                         startActivity(intent);
-//                        Toast.makeText(ReservationActivity.this, "Park: " + list.get(position), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -252,6 +253,10 @@ public class ReservationActivity extends AppCompatActivity {
             }
             case R.id.carParkRegMenu:{
                 startActivity(new Intent(ReservationActivity.this, ParkRegistrationActivity.class));
+                break;
+            }
+            case R.id.BookingRecord:{
+                startActivity(new Intent(ReservationActivity.this, BookingRecord.class));
                 break;
             }
         }

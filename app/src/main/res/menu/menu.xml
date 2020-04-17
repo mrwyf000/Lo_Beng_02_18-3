@@ -20,7 +20,7 @@
 
     <item
         android:id="@+id/logoutMenu"
-        android:orderInCategory="600"
+        android:orderInCategory="700"
         app:showAsAction="never"
         android:title="Logout">
     </item>
@@ -34,14 +34,21 @@
 
     <item
         android:id="@+id/carParkRegMenu"
-        android:orderInCategory="400"
+        android:orderInCategory="500"
         app:showAsAction="never"
         android:title="Park Registration">
     </item>
 
     <item
+        android:id="@+id/BookingRecord"
+        android:orderInCategory="400"
+        app:showAsAction="never"
+        android:title="Booking Record">
+    </item>
+
+    <item
         android:id="@+id/refreshMenu"
-        android:orderInCategory="500"
+        android:orderInCategory="600"
         app:showAsAction="never"
         android:title="Refresh">
     </item>

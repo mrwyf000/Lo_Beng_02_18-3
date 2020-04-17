@@ -180,6 +180,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 startActivity(new Intent(MapActivity.this, MapActivity.class));
                 break;
             }
+            case R.id.BookingRecord:{
+                startActivity(new Intent(MapActivity.this, BookingRecord.class));
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -281,92 +285,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
 //    //make marker to the map
-//    private Marker mTinHeng, mTinChak, mMarker;
-//    private static final LatLng lngTinHeng = new LatLng(22.4698, 114.0002);
-//    private static final LatLng lngTinChak = new LatLng(22.4684, 113.9987);
-//    private static final LatLng lngFortuneKingswood = new LatLng(22.4570, 114.0052);
-//
-//
-//    private void addMarkersToMap() {
-//        //set the UID of the car park operator
-//        String fdtinHeng = "3hLZBaPJP0R736AIwgONmz85Aqo2";
-//        String fdtinChak = "OEgCxUXsT1Ta9HtjYJ1aHVa0mk13";
-//        String fdtinYan =  "TUn3QNNacEUzyfEKQPrgPnj1Hkt1";
-//
-//        infowindow(fdtinHeng);
-//        infowindow(fdtinChak);
-//        infowindow(fdtinYan);
-//
-//    }
+////    private Marker mTinHeng, mTinChak, mMarker;
+////    private static final LatLng lngTinHeng = new LatLng(22.4698, 114.0002);
+////    private static final LatLng lngTinChak = new LatLng(22.4684, 113.9987);
+////    private static final LatLng lngFortuneKingswood = new LatLng(22.4570, 114.0052);
+////
+////
+////    private void addMarkersToMap() {
+////        //set the UID of the car park operator
+////        String fdtinHeng = "3hLZBaPJP0R736AIwgONmz85Aqo2";
+////        String fdtinChak = "OEgCxUXsT1Ta9HtjYJ1aHVa0mk13";
+////        String fdtinYan =  "TUn3QNNacEUzyfEKQPrgPnj1Hkt1";
+////
+////        infowindow(fdtinHeng);
+////        infowindow(fdtinChak);
+////        infowindow(fdtinYan);
+////
+////    }
 
-
-    //custom map marker info window
-    private void infowindow(String parkID) {
-
-//        reff = FirebaseDatabase.getInstance().getReference().child("Park").child(parkID);
-//        reff.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                String minimunCharge = dataSnapshot.child("minimunCharge").getValue().toString();
-//                String motor = dataSnapshot.child("motor").getValue().toString();
-//                String parkAddress1 = dataSnapshot.child("parkAddress").getValue().toString();
-//                String parkName1 = dataSnapshot.child("aaaParkName").getValue().toString();
-//                String parkingFee1 = dataSnapshot.child("parkingFee").getValue().toString();
-//                String privateCar = dataSnapshot.child("privateCar").getValue().toString();
-//                String truck = dataSnapshot.child("truck").getValue().toString();
-//                String flexibleFee1 = dataSnapshot.child("flexibleFee").getValue().toString();
-//                String avaMotor1 = dataSnapshot.child("avaMotor").getValue().toString();
-//                String avaPrivateCar1 = dataSnapshot.child("avaPrivateCar").getValue().toString();
-//                String avaTruck1 = dataSnapshot.child("avaTruck").getValue().toString();
-//                String lat = String.valueOf(dataSnapshot.child("latitude").getValue());
-//                String lng = String.valueOf(dataSnapshot.child("longitude").getValue());
-//
-//                LatLng latLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
-//
-//                title = parkName1;
-//                snippet = "Available parking slot: " + "\n" +
-//                        "Motor: " + avaMotor1 + "\n" +
-//                        "Private car: " + avaPrivateCar1 + "\n" +
-//                        "truck: " + avaTruck1 + "\n" +
-//                        "Normal Price: " + parkingFee1 + "\n" +
-//                        "Current Price: " + flexibleFee1;
-//
-//                mMarker = mGoogleMap.addMarker(new MarkerOptions()
-//                        .position(latLng)
-//                        .title(parkName1)
-//                        .snippet(snippet)
-//                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-//                Log.d(TAG, "snippet: " + snippet);
-
-
-
-//                mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-//                    @Override
-//                    public View getInfoWindow(Marker marker) {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public View getInfoContents(Marker marker) {
-//
-//                        View row = getLayoutInflater().inflate(R.layout.custom_info_window, null);
-//                        TextView tvtitle = (TextView) row.findViewById(R.id.title1);
-//                        TextView tvsnippet = (TextView) row.findViewById(R.id.snippet);
-//
-//                        tvsnippet.setText(snippet);
-//                        tvtitle.setText(title);
-//
-//                        return row;
-//                    }
-//
-//
-//                });
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//            }
-//        });
-    }
 
 
     //move the camera function
@@ -374,10 +310,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude );
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
         hideKeyboard(MapActivity.this);
-
-//        mGoogleMap.setInfoWindowAdapter(new poisInfoWindowAdapter(MapActivity.this));
-
-
     }
 
     private void init(){

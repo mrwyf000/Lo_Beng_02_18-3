@@ -123,17 +123,15 @@ public class ParkRegistrationActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                //Toast.makeText(ParkRegistrationActivity.this, "Registration succeed, uploaded", Toast.LENGTH_SHORT).show();
-                                //startActivity(new Intent(ParkRegistrationActivity.this, ParkFile.class));
                                 sendUserData();
                                 sendEmailVerification();
                             } else {
-                                Toast.makeText(ParkRegistrationActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ParkRegistrationActivity.this,
+                                        "Registration Failed", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 }
-
             }
         });
     }
@@ -143,7 +141,8 @@ public class ParkRegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (userEmail.getText().toString().isEmpty()) {
-                    Toast.makeText(ParkRegistrationActivity.this, "Please enter Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ParkRegistrationActivity.this,
+                            "Please enter Email", Toast.LENGTH_SHORT).show();
                 }else   {
                     checkEmail(userEmail.getText().toString());
                 }
@@ -208,6 +207,10 @@ public class ParkRegistrationActivity extends AppCompatActivity {
                 startActivity(new Intent(ParkRegistrationActivity.this, ParkRegistrationActivity.class));
                 break;
             }
+            case R.id.BookingRecord:{
+                startActivity(new Intent(ParkRegistrationActivity.this, BookingRecord.class));
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -242,14 +245,15 @@ public class ParkRegistrationActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(ParkRegistrationActivity.this, "Successfully Registered, Verification mail sent!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ParkRegistrationActivity.this,
+                                "Successfully Registered, Verification mail sent!", Toast.LENGTH_SHORT).show();
                         firebaseAuth.signOut();
                         finish();
                         startActivity(new Intent(ParkRegistrationActivity.this, CarParkLogin.class));
                     }else   {
-                        Toast.makeText(ParkRegistrationActivity.this, "Registration fail", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ParkRegistrationActivity.this,
+                                "Registration fail", Toast.LENGTH_SHORT).show();
                     }
-
                 }
             });
         }
@@ -271,10 +275,12 @@ public class ParkRegistrationActivity extends AppCompatActivity {
         String lng_longitude = "0";
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid()).child(park_name + "1");
+        DatabaseReference myRef = firebaseDatabase.getReference().child("Park")
+                .child(firebaseAuth.getUid()).child(park_name + "1");
         ParkUserProfile parkUserProfile = new ParkUserProfile(
                 park_name, park_address, motor_Car, private_Car, truck_Car,
-                parking_Fee, flexible_Fee, minimun_Charge, ava_Motor, ava_Private_Car, ava_Truck, lat_latitude, lng_longitude);
+                parking_Fee, flexible_Fee, minimun_Charge,
+                ava_Motor, ava_Private_Car, ava_Truck, lat_latitude, lng_longitude);
         myRef.setValue(parkUserProfile);
     }
 }

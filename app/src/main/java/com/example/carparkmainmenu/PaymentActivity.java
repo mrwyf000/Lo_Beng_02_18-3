@@ -4,23 +4,74 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class PaymentActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
+
+    private Button btConfirm;
+    String park_Name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
+        btConfirm = (Button) findViewById(R.id.btConfirm);
+        setBtConfirm();
+
     }
+
+    private void setBtConfirm(){
+        btConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendUniqueCodeToDriver();
+            }
+        });
+    }
+
+
+    private void sendUniqueCodeToDriver(){
+        Intent intent = getIntent();
+        String Park = intent.getStringExtra(BookCarParkActivity.EXTRA_PARK2);
+        park_Name = Park;
+        Date currentTime = Calendar.getInstance().getTime();
+
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null){
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = firebaseDatabase.getReference().child("Driver")
+                    .child("Booking").child(firebaseAuth.getUid()).child("Park");
+            ParkBookingRef parkBookingRef = new ParkBookingRef(
+                    park_Name, currentTime);
+            myRef.setValue(parkBookingRef);
+            Toast.makeText(PaymentActivity.this, "Data sent, reservation succeed!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(PaymentActivity.this, BookingRecord.class));
+
+        }else {
+            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
 
     //toolbar
     @Override
@@ -80,6 +131,10 @@ public class PaymentActivity extends AppCompatActivity {
             }
             case R.id.refreshMenu:{
                 startActivity(new Intent(PaymentActivity.this, PaymentActivity.class));
+                break;
+            }
+            case R.id.BookingRecord:{
+                startActivity(new Intent(PaymentActivity.this, BookingRecord.class));
                 break;
             }
         }

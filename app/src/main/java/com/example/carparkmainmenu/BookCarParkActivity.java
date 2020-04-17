@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class BookCarParkActivity extends AppCompatActivity {
+    public static final String EXTRA_PARK2 = "com.example.carparkmainmenu.EXTRA_PARK2";
+
     private static final String TAG = "BookCarParkActivity";
 
     FirebaseAuth firebaseAuth;
@@ -24,6 +26,8 @@ public class BookCarParkActivity extends AppCompatActivity {
     private TextView parkName,parkAddress, numberM, numberP, numberT, parkingFee, minCharge,
             flexibleFee, avaMotor, avaPrivateCar, avaTruck, latitude, longitude, parkInfo, totalSlot, avaSlot;
     private TextView empty, empty1, empty2, empty3, empty4;
+
+    String Park;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -60,6 +64,8 @@ public class BookCarParkActivity extends AppCompatActivity {
 
         String park = intent.getStringExtra(ReservationActivity.EXTRA_PARK);
         parkName.setText("Park Name \n" + park);
+        Park = park.toString();
+
         String parkAddress1 = intent.getStringExtra(ReservationActivity.EXTRA_PARKADDRESS);
         parkAddress.setText("Car Park Address \n" + parkAddress1);
         String motor = intent.getStringExtra(ReservationActivity.EXTRA_MOTOR);
@@ -104,7 +110,9 @@ public class BookCarParkActivity extends AppCompatActivity {
         btBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BookCarParkActivity.this, PaymentActivity.class));
+                Intent intent = new Intent(BookCarParkActivity.this, PaymentActivity.class);
+                intent.putExtra(EXTRA_PARK2, Park);
+                startActivity(intent);
             }
         });
     }
@@ -167,6 +175,10 @@ public class BookCarParkActivity extends AppCompatActivity {
             }
             case R.id.refreshMenu:{
                 startActivity(new Intent(BookCarParkActivity.this, BookCarParkActivity.class));
+                break;
+            }
+            case R.id.BookingRecord:{
+                startActivity(new Intent(BookCarParkActivity.this, BookingRecord.class));
                 break;
             }
         }

@@ -8,8 +8,8 @@
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="411dp"
-        android:layout_height="672dp"
+        android:layout_width="410dp"
+        android:layout_height="632dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -20,16 +20,15 @@
     </ListView>
 
     <TextView
-    android:id="@+id/tvCarParkInformation"
-    android:layout_width="wrap_content"
-    android:layout_height="32dp"
-    android:text="Car Park Information"
-    android:textSize="25sp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.498"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.03" />
+        android:id="@+id/tvCarParkInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="Car Park Information"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

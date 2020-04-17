@@ -197,7 +197,6 @@ public class ParkFile extends AppCompatActivity {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
                     Toast.makeText(ParkFile.this, "You are already login", Toast.LENGTH_SHORT).show();
-
                 }else {
                     startActivity(new Intent(ParkFile.this, CarParkLogin.class));
                 }
@@ -219,16 +218,22 @@ public class ParkFile extends AppCompatActivity {
                 startActivity(new Intent(ParkFile.this, ParkFile.class));
                 break;
             }
+            case R.id.BookingRecord:{
+                startActivity(new Intent(ParkFile.this, BookingRecord.class));
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void sendUserData()  {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference().child("Park").child(firebaseAuth.getUid()).child(park_name + "1");
+        DatabaseReference myRef = firebaseDatabase.getReference().child("Park")
+                .child(firebaseAuth.getUid()).child(park_name + "1");
         ParkUserProfile parkUserProfile = new ParkUserProfile(
                 park_name, park_address, motor_Car, private_Car, truck_Car,
-                parking_Fee, minimun_Charge, flexible_Fee, ava_Motor, ava_Private_Car, ava_Truck, lat_latitude, lng_longitude);
+                parking_Fee, minimun_Charge, flexible_Fee, ava_Motor,
+                ava_Private_Car, ava_Truck, lat_latitude, lng_longitude);
         myRef.setValue(parkUserProfile);
         Toast.makeText(ParkFile.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
     }

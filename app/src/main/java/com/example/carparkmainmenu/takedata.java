@@ -193,6 +193,10 @@ public class takedata extends AppCompatActivity {
                 startActivity(new Intent(takedata.this, takedata.class));
                 break;
             }
+            case R.id.BookingRecord:{
+                startActivity(new Intent(takedata.this, BookingRecord.class));
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }

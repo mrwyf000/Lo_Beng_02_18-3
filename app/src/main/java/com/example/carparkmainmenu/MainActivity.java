@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
                     Toast.makeText(MainActivity.this, "You are already login", Toast.LENGTH_SHORT).show();
-
                 }else {
                     startActivity(new Intent(MainActivity.this, CarParkLogin.class));
                 }
@@ -151,6 +150,10 @@ public class MainActivity extends AppCompatActivity {
             }
             case R.id.refreshMenu:{
                 startActivity(new Intent(MainActivity.this, MainActivity.class));
+                break;
+            }
+            case R.id.BookingRecord:{
+                startActivity(new Intent(MainActivity.this, BookingRecord.class));
                 break;
             }
 
@@ -299,7 +302,8 @@ public class MainActivity extends AppCompatActivity {
         else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
             //an error occured but we can resolve it
             Log.d(TAG, "isServicesOK: an error occured but we can fix it");
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this, available, ERROR_DIALOG_REQUEST);
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog
+                    (MainActivity.this, available, ERROR_DIALOG_REQUEST);
             dialog.show();
         }else{
             Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show();

@@ -178,6 +178,10 @@ public class CarParkLogin extends AppCompatActivity {
                 startActivity(new Intent(CarParkLogin.this, CarParkLogin.class));
                 break;
             }
+            case R.id.BookingRecord:{
+                startActivity(new Intent(CarParkLogin.this, BookingRecord.class));
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -192,7 +196,8 @@ public class CarParkLogin extends AppCompatActivity {
                     //Toast.makeText(CarParkLogin.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     checkEmailVerification();
                 }else {
-                    Toast.makeText(CarParkLogin.this, "Login Failed, email or password does not match", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CarParkLogin.this, "Login Failed, email or password does not match",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
