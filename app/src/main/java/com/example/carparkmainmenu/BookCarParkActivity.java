@@ -178,7 +178,13 @@ public class BookCarParkActivity extends AppCompatActivity {
                 break;
             }
             case R.id.BookingRecord:{
-                startActivity(new Intent(BookCarParkActivity.this, BookingRecord.class));
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    startActivity(new Intent(BookCarParkActivity.this, BookingRecord.class));
+                }else{
+                    Toast.makeText(BookCarParkActivity.this, "Please login first",Toast.LENGTH_SHORT).show();
+                }
                 break;
             }
         }

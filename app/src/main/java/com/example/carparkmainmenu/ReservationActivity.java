@@ -256,7 +256,13 @@ public class ReservationActivity extends AppCompatActivity {
                 break;
             }
             case R.id.BookingRecord:{
-                startActivity(new Intent(ReservationActivity.this, BookingRecord.class));
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    startActivity(new Intent(ReservationActivity.this, BookingRecord.class));
+                }else{
+                    Toast.makeText(ReservationActivity.this, "Please login first",Toast.LENGTH_SHORT).show();
+                }
                 break;
             }
         }

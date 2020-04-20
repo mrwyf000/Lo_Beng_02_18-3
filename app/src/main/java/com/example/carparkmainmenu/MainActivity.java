@@ -65,16 +65,16 @@ public class MainActivity extends AppCompatActivity {
         Driver = (Button) findViewById(R.id.btDriver);
 
 
-        CarPark = (Button) findViewById(R.id.btCarPark);
+//        CarPark = (Button) findViewById(R.id.btCarPark);
 
         //go to the car park operator login page when the button has been clicked
-        CarPark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CarParkLogin.class);
-                startActivity(intent);
-            }
-        });
+//        CarPark.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, CarParkLogin.class);
+//                startActivity(intent);
+//            }
+//        });
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         Driver = (Button) findViewById(R.id.btDriver);
@@ -87,8 +87,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getLastKnowLocation();
-
-
+        getChatrooms();
 
     }
 
@@ -153,7 +152,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             case R.id.BookingRecord:{
-                startActivity(new Intent(MainActivity.this, BookingRecord.class));
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    startActivity(new Intent(MainActivity.this, BookingRecord.class));
+                }else{
+                    Toast.makeText(MainActivity.this, "Please login first",Toast.LENGTH_SHORT).show();
+                }
                 break;
             }
 

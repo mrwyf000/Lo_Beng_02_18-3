@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class CarParkLogin extends AppCompatActivity {
@@ -104,7 +105,7 @@ public class CarParkLogin extends AppCompatActivity {
         //check if the user is login
         if(user != null){
             finish();
-            startActivity(new Intent(CarParkLogin.this, takedata.class));
+            startActivity(new Intent(CarParkLogin.this, MapActivity.class));
         }
 
         //bring user to the user information page (if true)
@@ -179,7 +180,13 @@ public class CarParkLogin extends AppCompatActivity {
                 break;
             }
             case R.id.BookingRecord:{
-                startActivity(new Intent(CarParkLogin.this, BookingRecord.class));
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    startActivity(new Intent(CarParkLogin.this, BookingRecord.class));
+                }else{
+                    Toast.makeText(CarParkLogin.this, "Please login first",Toast.LENGTH_SHORT).show();
+                }
                 break;
             }
         }
@@ -211,7 +218,7 @@ public class CarParkLogin extends AppCompatActivity {
         if (emailflag) {
             finish();
             Toast.makeText(CarParkLogin.this, "Login Succeed", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(CarParkLogin.this, takedata.class));
+            startActivity(new Intent(CarParkLogin.this, MapActivity.class));
         }else   {
             Toast.makeText(this, "Verify your email", Toast.LENGTH_SHORT).show();
             firebaseAuth.signOut();

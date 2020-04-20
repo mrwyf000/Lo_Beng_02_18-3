@@ -219,8 +219,14 @@ public class BookingRecord extends AppCompatActivity {
                 break;
             }
             case R.id.refreshMenu:
-            case R.id.BookingRecord: {
-                startActivity(new Intent(BookingRecord.this, BookingRecord.class));
+            case R.id.BookingRecord:{
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    startActivity(new Intent(BookingRecord.this, BookingRecord.class));
+                }else{
+                    Toast.makeText(BookingRecord.this, "Please login first",Toast.LENGTH_SHORT).show();
+                }
                 break;
             }
         }

@@ -66,7 +66,7 @@ public class PaymentActivity extends AppCompatActivity {
             startActivity(new Intent(PaymentActivity.this, BookingRecord.class));
 
         }else {
-            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "please login first", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -134,7 +134,13 @@ public class PaymentActivity extends AppCompatActivity {
                 break;
             }
             case R.id.BookingRecord:{
-                startActivity(new Intent(PaymentActivity.this, BookingRecord.class));
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    startActivity(new Intent(PaymentActivity.this, BookingRecord.class));
+                }else{
+                    Toast.makeText(PaymentActivity.this, "Please login first",Toast.LENGTH_SHORT).show();
+                }
                 break;
             }
         }

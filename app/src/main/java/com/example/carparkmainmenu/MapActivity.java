@@ -181,7 +181,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 break;
             }
             case R.id.BookingRecord:{
-                startActivity(new Intent(MapActivity.this, BookingRecord.class));
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    startActivity(new Intent(MapActivity.this, BookingRecord.class));
+                }else{
+                    Toast.makeText(MapActivity.this, "Please login first",Toast.LENGTH_SHORT).show();
+                }
                 break;
             }
         }
@@ -364,6 +370,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             mGoogleMap.addMarker(new MarkerOptions().position(latLng).snippet(address.getFeatureName()));
 
 
+        }else{
+            moveCamera(latLng, zoomLevel, title);
         }
     }
 
