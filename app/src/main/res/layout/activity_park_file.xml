@@ -17,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintVertical_bias="0.022" />
 
     <TextView
         android:id="@+id/tvParkingSlot"
@@ -29,8 +29,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.398" />
+        app:layout_constraintTop_toBottomOf="@+id/edCarParkAddress"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvEmptySlot"
@@ -40,9 +40,10 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.102"
+        app:layout_constraintHorizontal_bias="0.098"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/edMotorcycle"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/edMotorcycle"
@@ -71,8 +72,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tvEmptySlot"
-        app:layout_constraintTop_toBottomOf="@+id/tvParkingSlot"
-        app:layout_constraintVertical_bias="0.183" />
+        app:layout_constraintTop_toBottomOf="@+id/tvEmptySlot"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/edPrivateCar"
@@ -123,6 +124,7 @@
         app:layout_constraintTop_toTopOf="@+id/edPrivateCar"
         app:layout_constraintVertical_bias="0.0" />
 
+
     <EditText
         android:id="@+id/edTruck2"
         android:layout_width="80dp"
@@ -131,11 +133,11 @@
         android:hint="Truck"
         android:inputType="number"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/edPrivateCar2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.366"
-        app:layout_constraintStart_toEndOf="@+id/edPrivateCar2"
-        app:layout_constraintTop_toBottomOf="@+id/tvEmptySlot"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/edTruck"
+        app:layout_constraintTop_toTopOf="@+id/edPrivateCar2"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -146,10 +148,10 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintHorizontal_bias="0.082"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edMotorcycle"
-        app:layout_constraintVertical_bias="0.226" />
+        app:layout_constraintTop_toBottomOf="@+id/edMotorcycle2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvMinCharge"
@@ -162,9 +164,7 @@
         app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edParkingFee"
-        app:layout_constraintVertical_bias="0.054" />
-
-
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/edMinimunCharge"
@@ -189,15 +189,15 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintHorizontal_bias="0.748"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edMinimunCharge"
-        app:layout_constraintVertical_bias="0.092" />
+        app:layout_constraintTop_toTopOf="@+id/tvParkingFee"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvFlexibleFee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="24dp"
         android:ems="10"
         android:hint="$$"
         android:textSize="14sp"
@@ -233,7 +233,7 @@
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.904" />
+        app:layout_constraintVertical_bias="0.893" />
 
     <TextView
         android:id="@+id/tvafp"
@@ -242,12 +242,12 @@
         android:text="*The parking fee will automatically change based on the empty space of parking slot.
         \n \n *If you do not know what is your address Latitude and Longitude, please go to Google Map and find it."
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/btBack"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.154"
+        app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFlexibleFee"
-        app:layout_constraintVertical_bias="0.428" />
+        app:layout_constraintTop_toTopOf="@+id/btSubmit"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btBack"
@@ -258,8 +258,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.97" />
+        app:layout_constraintTop_toBottomOf="@+id/btSubmit"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvParkName"
@@ -276,7 +276,7 @@
 
     <EditText
         android:id="@+id/edParkName"
-        android:layout_width="199dp"
+        android:layout_width="180dp"
         android:layout_height="40dp"
         android:ems="10"
         android:hint="Car Park Name"
@@ -300,23 +300,23 @@
         app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edParkName"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/edCarParkAddress"
-        android:layout_width="172dp"
-        android:layout_height="96dp"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Car Park Address"
         android:inputType="textMultiLine"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvParkingSlot"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.004"
         app:layout_constraintStart_toStartOf="@+id/tvParkAddress"
         app:layout_constraintTop_toBottomOf="@+id/tvParkAddress"
-        app:layout_constraintVertical_bias="0.142" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/edLat"
@@ -329,8 +329,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.863"
         app:layout_constraintStart_toStartOf="@+id/tvParkingFee"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.146" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLatitude"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvLatitude"
@@ -342,8 +342,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.793"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.111" />
+        app:layout_constraintTop_toTopOf="@+id/tvParkName"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvLongitude"
@@ -355,8 +355,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.831"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.199" />
+        app:layout_constraintTop_toBottomOf="@+id/edLat"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/edLng"
@@ -369,7 +369,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.863"
         app:layout_constraintStart_toStartOf="@+id/tvParkingFee"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.238" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLongitude"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

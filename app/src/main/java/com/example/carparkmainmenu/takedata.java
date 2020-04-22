@@ -121,11 +121,11 @@ public class takedata extends AppCompatActivity {
                     avaPrivateCar.setText(avaPrivateCar1);
                     avaTruck.setText(avaTruck1);
                     minCharge.setText("$" +minimunCharge +"/hr");
-                    numberM.setText("motor: " + motor);
+                    numberM.setText("Motor: " + motor);
                     parkAddress.setText(parkAddress1);
                     parkName.setText(parkName1);
                     parkingFee.setText("$" +parkingFee1 + "/hr");
-                    numberP.setText("private car: " + privateCar);
+                    numberP.setText("Private car: " + privateCar);
                     numberT.setText("Truck: " + truck);
                     latitude.setText(lat);
                     longitude.setText(lng);
