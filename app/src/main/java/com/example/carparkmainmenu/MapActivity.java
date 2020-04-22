@@ -324,12 +324,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH
-                        || actionId == EditorInfo.IME_ACTION_DONE
-                        ||keyEvent.getAction() == KeyEvent.ACTION_DOWN
-                        ||keyEvent.getAction() == KeyEvent.KEYCODE_ENTER){
-                    //execute our method for searching
-                    geoLocate();
+                String searchBar = mSearchText.getText().toString();
+                if (!searchBar.isEmpty()) {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH
+                            || actionId == EditorInfo.IME_ACTION_DONE
+                            || keyEvent.getAction() == KeyEvent.ACTION_DOWN
+                            || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
+                        //execute our method for searching
+                        geoLocate();
+                    }
+                }else{
+                    Toast.makeText(MapActivity.this, "Please enter your desteniation",Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }

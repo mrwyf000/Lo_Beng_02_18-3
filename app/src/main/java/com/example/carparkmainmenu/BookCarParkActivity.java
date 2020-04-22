@@ -69,23 +69,23 @@ public class BookCarParkActivity extends AppCompatActivity {
         String parkAddress1 = intent.getStringExtra(ReservationActivity.EXTRA_PARKADDRESS);
         parkAddress.setText("Car Park Address \n" + parkAddress1);
         String motor = intent.getStringExtra(ReservationActivity.EXTRA_MOTOR);
-        numberM.setText("Motor:                             " +motor);
+        numberM.setText("Motor:                                  " +motor);
         String parivateCar = intent.getStringExtra(ReservationActivity.EXTRA_PRIVATECAR);
-        numberP.setText("Private Car:                    " +parivateCar);
+        numberP.setText("Private Car:                         " +parivateCar);
         String truck = intent.getStringExtra(ReservationActivity.EXTRA_TRUCK);
-        numberT.setText("Truck:                              " + truck);
+        numberT.setText("Truck:                                   " + truck);
         String avaMotor1 = intent.getStringExtra(ReservationActivity.EXTRA_AVAM);
-        avaMotor.setText("Motor:                             " + avaMotor1);
+        avaMotor.setText("Motor:                                  " + avaMotor1);
         String avaPrivate = intent.getStringExtra(ReservationActivity.EXTRA_AVAP);
-        avaPrivateCar.setText("Private Car:                    " + avaPrivate);
+        avaPrivateCar.setText("Private Car:                         " + avaPrivate);
         String avaTruck1 = intent.getStringExtra(ReservationActivity.EXTRA_AVAT);
-        avaTruck.setText("Truck:                              " + avaTruck1);
+        avaTruck.setText("Truck:                                   " + avaTruck1);
         String normalPrice = intent.getStringExtra(ReservationActivity.EXTRA_NP);
-        parkingFee.setText("Normal Parking Fee:    $" + normalPrice);
+        parkingFee.setText("Normal Parking Fee:         $" + normalPrice);
         String minimunCharge = intent.getStringExtra(ReservationActivity.EXTRA_MINC);
-        minCharge.setText("Minimun Charge:          $" + minimunCharge);
+        minCharge.setText("Minimun Charge:               $" + minimunCharge);
         String currentPrice = intent.getStringExtra(ReservationActivity.EXTRA_CP);
-        flexibleFee.setText("Current Parking Fee:    $" + currentPrice);
+        flexibleFee.setText("Current Parking Fee:         $" + currentPrice);
 
 
         btBack = (Button) findViewById(R.id.btBack);

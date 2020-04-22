@@ -16,19 +16,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.112" />
+        app:layout_constraintVertical_bias="0.068" />
 
-    <Button
-        android:id="@+id/btBack"
+    <TextView
+        android:id="@+id/tvParkName2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back to map"
+        android:text="   "
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.887"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.954" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvPark"
+        app:layout_constraintTop_toBottomOf="@+id/tvPark"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/btCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="showAlertDialog"
+        android:text="Cancel Booking?"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookingTime"
+        app:layout_constraintVertical_bias="0.002"
+        tools:ignore="OnClick" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Booking Time:"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvPark"
+        app:layout_constraintTop_toBottomOf="@+id/tvPark"
+        app:layout_constraintVertical_bias="0.114" />
 
     <TextView
         android:id="@+id/tvPark"
@@ -41,57 +67,31 @@
         app:layout_constraintHorizontal_bias="0.179"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.224" />
-
-    <TextView
-        android:id="@+id/tvParkName2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="   "
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tvPark"
-        app:layout_constraintTop_toBottomOf="@+id/tvPark"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.181" />
 
     <TextView
         android:id="@+id/tvBookingTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="   "
-        android:textSize="20sp"
+        android:text=" \n  "
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tvTime"
         app:layout_constraintTop_toBottomOf="@+id/tvTime"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.002" />
 
-    <TextView
-        android:id="@+id/tvTime"
+    <Button
+        android:id="@+id/btBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Booking Time:"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvPark"
-        app:layout_constraintTop_toBottomOf="@+id/tvPark"
-        app:layout_constraintVertical_bias="0.121" />
-
-    <TextView
-        android:id="@+id/btCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="showAlertDialog"
-        android:text="Cancel Booking?"
+        android:text="Back to map"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tvTime"
+        app:layout_constraintHorizontal_bias="0.887"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48"
-        tools:ignore="OnClick" />
+        app:layout_constraintVertical_bias="0.954" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
