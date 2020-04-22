@@ -39,7 +39,7 @@ public class ParkFile extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
-    private Button logout, submit;
+    private Button logout, submit, back;
     private EditText parkName, parkAddress, motor, privateCar, truck, parkingFee, minimunCharge,avamotor, avaprivateCar, avaTruck, latitude, longitude;
     private TextView flexibleFee;
     String park_name, park_address, motor_Car, private_Car, truck_Car, parking_Fee,
@@ -63,6 +63,7 @@ public class ParkFile extends AppCompatActivity {
         avaTruck = (EditText)findViewById(R.id.edTruck2);
         latitude = (EditText)findViewById(R.id.edLat);
         longitude = (EditText)findViewById(R.id.edLng);
+        back = (Button)findViewById(R.id.btBack);
 
 
         //flexiblePricing = (CheckBox) findViewById(R.id.cbFlexiblePricing);
@@ -139,6 +140,13 @@ public class ParkFile extends AppCompatActivity {
 //                Logout();
 //            }
 //        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ParkFile.this, takedata.class));
+            }
+        });
 
         //upload user information button
         submit.setOnClickListener(new View.OnClickListener() {
